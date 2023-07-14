@@ -4,14 +4,45 @@
 @tailwind components;
 @tailwind utilities;
 
+/*blure edge*/
+@layer components {
+  .blurEdge {
+    @apply relative;
+  }
+
+  .blurEdge::before,
+  .blurEdge::after {
+    content: "";
+    @apply absolute inset-0;
+  }
+
+  .blurEdge::before {
+    backdrop-filter: blur(10px);
+    z-index: -10;
+  }
+
+  .blurEdge::after {
+    background-image: linear-gradient(
+      to right,
+      rgba(4, 17, 4, 0.103) 10%,
+      transparent 50%,
+      rgba(1, 2, 0, 0.308),
+      transparent
+    );
+  }
+}
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
+header{
+  animation: slideIn 2s ease 1;
+  animation-delay: 0s;
+}
 body {
   font-family: Inter;
+
 }
 
 .flexCenter {
@@ -136,6 +167,22 @@ body {
 .bg-transparent{
   @apply py-5 px-8  border-nav-border gap-4 transition ease-in-out delay-200	;
 }
+/* add the overaly on side */
+.backgroundOverlay {
+  @apply relative z-[-50] min-h-screen w-[50%]
+}
+
+.backgroundOverlay::before {
+
+  content: "";
+  @apply absolute inset-0 bg-cover bg-center;
+}
+
+.backgroundOverlay::after {
+  content: "";
+  @apply absolute inset-0 bg-cover bg-center -z-10;
+  background-image: linear-gradient(to right, black 40%, transparent 100%);
+}
 /* background image */
 .backgroundImage {
 @apply absolute inset-0 bg-cover bg-center;
@@ -145,10 +192,11 @@ background-image: url('/images/stag3.jpg');
 /* Costum bakcgounrd */
 
 .backgroundImage {
-  @apply relative z-[-50]
+  @apply relative z-[-50] min-h-screen
 }
 
 .backgroundImage::before {
+
   content: "";
   @apply absolute inset-0 bg-cover bg-center;
 }
@@ -156,7 +204,7 @@ background-image: url('/images/stag3.jpg');
 .backgroundImage::after {
   content: "";
   @apply absolute inset-0 bg-cover bg-center z-[-100];
-  background-image: linear-gradient(to right, black 20%, transparent 60%);
+  background-image: linear-gradient(to top, black 40%, transparent 100%);
 }
 /* Profile Menu */
 .profile_menu-items {
@@ -188,4 +236,9 @@ background-image: url('/images/stag3.jpg');
 /* Profile Projects */
 .profile_projects {
   @apply grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8 mt-5;
+}
+@media (max-width: 1244px) {
+  .backgroundOverlay {
+    width: 100%;
+  }
 }

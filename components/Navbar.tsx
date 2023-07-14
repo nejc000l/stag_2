@@ -7,7 +7,7 @@ import { NavLinks } from "@/constants";
 import Link from "next/link";
 
 function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(window.scrollY > 0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,8 +23,8 @@ function Navbar() {
 
   return (
     <nav
-      className={`justify-between flex sticky top-0 z-100 items-center  text-white ${
-        isScrolled ? "navbar" : "bg-transparent "
+      className={`justify-between flex sticky top-0 z-10 items-center text-white ${
+        isScrolled ? "navbar" : "bg-transparent"
       }`}
     >
       <div className="flex-1 flexStart gap-10">
@@ -37,7 +37,7 @@ function Navbar() {
           />
         </Link>
       </div>
-      <ul className="hidden xl:flex  text-small gap-7">
+      <ul className="hidden xl:flex text-small gap-7">
         {NavLinks.map((link) => (
           <Link href={link.href} key={link.key}>
             <li>{link.text}</li>
@@ -47,5 +47,6 @@ function Navbar() {
     </nav>
   );
 }
+
 
 export default Navbar;
