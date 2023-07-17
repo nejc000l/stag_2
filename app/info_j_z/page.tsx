@@ -14,7 +14,7 @@ function Info_j_z() {
     <>
       <Navbar />
       <PageWrapper>
-        <section className="relative flex flex-col md:flex-row">
+        <section className="relative flex flex-col md:flex-row ">
           <div
             className={`flex-start paddings min-h-screen flex  flex-row justify-center items-center  ${
               showBackgroundOverlay ? "backgroundOverlay" : ""
@@ -24,8 +24,7 @@ function Info_j_z() {
               <h1 className="py-4 font-bold text-4xl 	">
                 Infomarcije Javnega značaja
               </h1>
-
-              <h4 className="text-[12px] sm:text-[16px] text-justify">
+              <h4 className="text-[12px] sm:text-[16px] text-justify ">
                 Lovska družina Pugled mora v skladu z določili Zakona o dostopu
                 do informacij javnega značaja vsakomur omogočiti dostop do
                 informacije javnega značaja in ponovno uporabo informacij

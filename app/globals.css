@@ -158,7 +158,10 @@ body {
 .modal_wrapper {
   @apply flex justify-start items-center flex-col absolute h-[95%] w-full bottom-0 bg-white rounded-t-3xl lg:px-40 px-8 pt-14 pb-72 overflow-auto;
 }
-
+/*padding nav*/
+.paddingNav{
+    @apply py-[10px] px-0 ;
+  }
 /* Navbar */
 .navbar {
   @apply py-5 px-8  border-nav-border gap-4 bg-[#0c1607];
@@ -173,6 +176,8 @@ body {
 }
 
 .backgroundOverlay::before {
+  backdrop-filter: blur(10px);
+  z-index: -10;
 
   content: "";
   @apply absolute inset-0 bg-cover bg-center;
