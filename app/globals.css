@@ -6,6 +6,10 @@
 
 /*blure edge*/
 @layer components {
+  .react-pdf__Page__textContent .textLayer {
+    @apply m-auto w-4/5 h-full !important;
+  }
+
   .blurEdge {
     @apply relative;
   }
@@ -74,6 +78,8 @@ body {
   background: #888;
   border-radius: 12px;
 }
+ 
+
 
 .modal-head-text {
   @apply md:text-5xl text-3xl font-extrabold text-left max-w-5xl w-full;
@@ -172,7 +178,7 @@ body {
 }
 /* add the overaly on side */
 .backgroundOverlay {
-  @apply relative z-[-50] min-h-screen w-[50%]
+  @apply absolute z-[-50] min-h-screen 
 }
 
 .backgroundOverlay::before {

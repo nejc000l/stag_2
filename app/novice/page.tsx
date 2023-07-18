@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { PageWrapper } from "../pageWrapper";
 import Navbar from "@/components/Navbar";

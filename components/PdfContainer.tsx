@@ -1,43 +1,48 @@
-"use client";
-import React, { useState,useEffect } from "react";
-import { motion } from "framer-motion";
-import { CiMenuBurger } from "react-icons/Ci";
-import { Document, Page } from "react-pdf";
-import contractPdf from "../public/LD_Pugled_Katalog_javnega.pdf";
+import React, { useState, useEffect } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
 function PdfContainer() {
-  const [isOpen, setIsOpen] = useState(true);
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-  };
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
-
-  function onDocumentLoadSuccess({ numPages: nextNumPages }:any) {
+  const [selectedPage, setSelectedPage] = useState(1);
+  const pathname = usePathname()
+  function onDocumentLoadSuccess({ numPages: nextNumPages }: any) {
     setNumPages(nextNumPages);
   }
+  const fileMap: { [key: string]: string } = {
+    '/info_j_z': '/LD_Pugled_Katalog_javnega.pdf',
+    '/apk': '/ZNUAPK.pdf',
+    '/n_r_l_u': '/path/to/n_r_l_u/file.pdf',
+    '/novice': '/path/to/novice/file.pdf'
+  };
+  
+  let file = fileMap[pathname];
   return (
     <div className="w-[100%] ">
       <div className="bg-[#0411042f] min-h-screen   paddings  blurEdge  shadow-4xl">
         <div className="relative z-[2]  ">
-          <nav className="w-[100%] paddingNav ">
-            <button className="pointer " onClick={handleClick}>
-              <CiMenuBurger className="w-[40px] h-[40px]" />{" "}
-            </button>
+          <nav className="w-[100%] paddingNav  ">
           </nav>
-          <div className="h-screen w-full overflow-scroll absolute">
-            <div className="absolute text-center w-[100%] h-[100%] ">
-            <div>helloo</div>
-
+          <div className="w-full overflow-scroll flex justify-center ">
+            <div className=" text-center ">
+              <Document
+                className="h-[100vh]"
+                file={file}
+                onLoadSuccess={onDocumentLoadSuccess}
+              >
+                {Array.from(new Array(numPages), (el, index) => (
+                  <Page
+                    key={`page_${index + 1}`}
+                    pageNumber={index + 1}
+                    width={600}
+                    height={600}
+                  />
+                ))}
+              </Document>
             </div>
-            <motion.div
-              className={`bg-[#0c16078e] z-[2] relative top-0 h-[87vh] left-0 w-[40%]`}
-              animate={{ x: isOpen ? "-100%" : "0%" }}
-            >
-              <div className="flex justify-center items-center h-screen w-full">
-         
-              </div>
-            </motion.div>
           </div>
         </div>
       </div>

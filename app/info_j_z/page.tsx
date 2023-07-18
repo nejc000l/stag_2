@@ -1,26 +1,33 @@
-" @client ";
-"use client";
+'use client'
 import { useState } from "react";
 import { PageWrapper } from "../pageWrapper";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Tab } from "@headlessui/react";
+import { CiMenuBurger} from "react-icons/Ci";
+import {AiOutlineClose } from 'react-icons/Ai'
 import PdfContainer from "@/components/PdfContainer";
-
+import {motion} from 'framer-motion'
 function Info_j_z() {
   const [showBackgroundOverlay, setShowBackgroundOverlay] = useState(true);
-
+  const [isOpen, setIsOpen] = useState(true)
   return (
     <>
       <Navbar />
       <PageWrapper>
-        <section className="relative flex flex-col md:flex-row ">
+        <section className="relative flex flex-col md:flex-row z-[4] ">
           <div
-            className={`flex-start paddings min-h-screen flex  flex-row justify-center items-center  ${
+            className={`paddings min-h-screen flex  flex-row justify-center items-center  ${
               showBackgroundOverlay ? "backgroundOverlay" : ""
             } w-full`}
           >
-            <div className="flex  justify-start py-4  flex-col paddings  ">
+
+
+            <div className="flex cursor-pointer py-4  flex-col paddings  ">
+            {isOpen === true ? 
+              <CiMenuBurger className="relative z-10 w-[40px] items-end h-[40px]" onClick={() => setIsOpen(false)}/> : 
+              <AiOutlineClose className="relative z-10 w-[40px] items-end h-[40px]" onClick={() => setIsOpen(true)}/>}
+
               <h1 className="py-4 font-bold text-4xl 	">
                 Infomarcije Javnega značaja
               </h1>
@@ -41,9 +48,12 @@ function Info_j_z() {
               </span>
             </div>
           </div>
-          <div className="w-[50%] relative flex items-center justify-center flex-col">
+        <motion.div  animate={{ x: isOpen ? "-100%" : "0%" }} className={`relative  flex w-[100%] items-center justify-center flex-col z-0`}>
+        {isOpen === true ? 
+              '': 
+              <AiOutlineClose className="relative z-10 w-[40px] items-end h-[40px]" onClick={() => setIsOpen(true)}/>}
             <PdfContainer/>
-          </div>
+          </motion.div>
         </section>
       </PageWrapper>
       <Footer />

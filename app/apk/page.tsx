@@ -5,21 +5,28 @@ import { PageWrapper } from "../pageWrapper";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PdfContainer from "@/components/PdfContainer";
+import { CiMenuBurger} from "react-icons/Ci";
+import {AiOutlineClose,AiOutlineFilePdf } from 'react-icons/Ai'
+import {motion} from 'framer-motion'
 
 function Apk() {
   const [showBackgroundOverlay, setShowBackgroundOverlay] = useState(true);
+  const [isOpen, setIsOpen] = useState(true)
 
   return (
     <>
       <Navbar />
       <PageWrapper>
-        <section className="relative flex flex-row">
+        <section className="relative flex flex-row z-[4] ">
           <div
             className={`flex-start paddings min-h-screen flex flex-col justify-center  ${
               showBackgroundOverlay ? "backgroundOverlay" : ""
             }`}
           >
             <div className="flex  justify-start py-4  flex-col   ">
+            {isOpen === true ? 
+              <AiOutlineFilePdf className="relative z-10 w-[40px] items-end h-[40px] cursor-pointer" onClick={() => setIsOpen(!isOpen)}/> : 
+''}
               <h1 className="py-4 font-bold text-4xl	">
                 Afriška prašičja kuga(APK)
               </h1>
@@ -52,9 +59,12 @@ function Apk() {
               </span>
             </div>
           </div>
-          <div className="w-[50%] relative flex items-center justify-center flex-col">
+          <motion.div  animate={{ x: isOpen ? "-100%" : "0%" }} className={`relative  flex w-[100%] items-center justify-center flex-col z-0`}>
+        {isOpen === true ? 
+              '': 
+              <AiOutlineClose className="relative z-10 w-[40px] items-end h-[40px] cursor-pointer" onClick={() => setIsOpen(!isOpen)}/>}
             <PdfContainer/>
-          </div>
+          </motion.div>
         </section>
       </PageWrapper>
       <Footer />
