@@ -184,7 +184,6 @@ body {
 .backgroundOverlay::before {
   backdrop-filter: blur(10px);
   z-index: -10;
-
   content: "";
   @apply absolute inset-0 bg-cover bg-center;
 }
@@ -215,7 +214,7 @@ background-image: url('/images/stag3.jpg');
 .backgroundImage::after {
   content: "";
   @apply absolute inset-0 bg-cover bg-center z-[-100];
-  background-image: linear-gradient(to top, black 40%, transparent 100%);
+  background-image: linear-gradient(to top, rgb(0, 0, 0) 40%, transparent 100%);
 }
 /* Profile Menu */
 .profile_menu-items {

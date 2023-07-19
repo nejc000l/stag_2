@@ -11,7 +11,8 @@ export default function Home() {
       <PageWrapper>
        <TitleNavigation/>
       </PageWrapper>
-      <Footer/>
+  <Footer/>
+
     </>
   )
 }

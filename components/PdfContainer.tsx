@@ -15,33 +15,20 @@ function PdfContainer() {
   const fileMap: { [key: string]: string } = {
     '/info_j_z': '/LD_Pugled_Katalog_javnega.pdf',
     '/apk': '/ZNUAPK.pdf',
-    '/n_r_l_u': '/path/to/n_r_l_u/file.pdf',
-    '/novice': '/path/to/novice/file.pdf'
+    '/n_r_u_l': '/Nacrt_ravnanja_APK.pdf',
+    '/novice': '/zapisnik.pdf'
   };
   
   let file = fileMap[pathname];
   return (
     <div className="w-[100%] ">
       <div className="bg-[#0411042f] min-h-screen   paddings  blurEdge  shadow-4xl">
-        <div className="relative z-[2]  ">
+        <div className="relative mr-[20%] ml-[20%] z-[2]  ">
           <nav className="w-[100%] paddingNav  ">
           </nav>
           <div className="w-full overflow-scroll flex justify-center ">
-            <div className=" text-center ">
-              <Document
-                className="h-[100vh]"
-                file={file}
-                onLoadSuccess={onDocumentLoadSuccess}
-              >
-                {Array.from(new Array(numPages), (el, index) => (
-                  <Page
-                    key={`page_${index + 1}`}
-                    pageNumber={index + 1}
-                    width={600}
-                    height={600}
-                  />
-                ))}
-              </Document>
+            <div className=" text-center  ">
+             <iframe height={600} width={600}  src={file} ></iframe>
             </div>
           </div>
         </div>

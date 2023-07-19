@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 const FooterColumn= ()=>(
-    <div className="footer_column">
+    <div className="footer_column    ">
         <h4 className="font-semibold">
 
         </h4>
@@ -18,7 +18,7 @@ const FooterColumn= ()=>(
 )
 function Footer() {
   return (
-    <footer className="flexStart footer ">
+    <footer className="flexStart footer h-auto">
       <div className="flex-flex-col gap-12 w-full z-10">
         <div className="flex items-start flex-col">
           Vidergarjeva ulica 13 Ljubljana 1261 LJUBLJANA-DOBRUNJE
