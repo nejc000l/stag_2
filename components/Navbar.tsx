@@ -4,11 +4,13 @@ import Image from "next/image";
 import { NavLinks } from "@/constants";
 import Link from "next/link";
 import { Transition } from "@headlessui/react";
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(window.scrollY > 0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const router = usePathname()
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -33,13 +35,18 @@ function Navbar() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
+  const fileMap: { [key: string]: string } = {
+    '/':'/'
+  };
+  
+  let file = fileMap[router];
   return (
     <nav
-      className={`justify-between flex sticky top-0 z-10 items-center text-white ${
-        isScrolled ? "navbar" : "bg-transparent"
-      }`}
-    >
+    className={`justify-between flex sticky top-0 z-[5] items-center text-white ${
+      isScrolled ? "navbar" : (file ? "bg-transparent " : (file ? 'no-blur' : "bg-transparent backgroundOverlay2"))
+    }`}
+  >
+  
       <div className="flex-1 flexStart gap-10">
         <Link href="/">
           <Image
@@ -69,7 +76,7 @@ function Navbar() {
               leaveFrom="transform translate-y-0 opacity-100"
               leaveTo="transform -translate-y-full opacity-0"
             >
-              <ul className="flex flex-col my-4 bg-[#0c1607] text-black w-96 fixed top-0 left-0 p-4 transform">
+              <ul className="flex flex-col   my-4 bg-[#0c1607] text-black w-96 fixed top-0 left-0 p-4 transform">
                 {NavLinks.slice(2).map((link) => (
                   <Link href={link.href} key={link.key}>
                     <li className="text-white text-[14px]	py-4">{link.text}</li>
@@ -106,7 +113,7 @@ function Navbar() {
               leaveFrom="transform translate-y-0 opacity-100 "
               leaveTo="transform -translate-y-full opacity-0"
             >
-              <ul className="flex flex-col  bg-[#0c1607] text-black  fixed top-0 left-0 p-4 transform ">
+              <ul className="flex flex-col z-10  bg-[#0c1607] text-black  fixed top-0 left-0 p-4 transform ">
                 {NavLinks.map((link) => (
                   <Link href={link.href} key={link.key}>
                     <li className="py-2 text-white ">{link.text}</li>

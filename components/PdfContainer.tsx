@@ -22,13 +22,13 @@ function PdfContainer() {
   let file = fileMap[pathname];
   return (
     <div className="w-[100%] ">
-      <div className="bg-[#0411042f] min-h-screen   paddings  blurEdge  shadow-4xl">
-        <div className="relative mr-[20%] ml-[20%] z-[2]  ">
+      <div className=" min-h-screen   paddings  blurEdge  shadow-4xl">
+        <div className="relative mr-[20%] ml-[20%] z-[2] ">
           <nav className="w-[100%] paddingNav  ">
           </nav>
           <div className="w-full overflow-scroll flex justify-center ">
             <div className=" text-center  ">
-             <iframe height={600} width={600}  src={file} ></iframe>
+             <iframe className="p-4" height={600} width={600}  src={file} ></iframe>
             </div>
           </div>
         </div>

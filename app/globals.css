@@ -9,7 +9,9 @@
   .react-pdf__Page__textContent .textLayer {
     @apply m-auto w-4/5 h-full !important;
   }
-
+  .no-blur {
+    backdrop-filter: none;
+  }
   .blurEdge {
     @apply relative;
   }
@@ -172,13 +174,33 @@ body {
 .navbar {
   @apply py-5 px-8  border-nav-border gap-4 bg-[#0c1607];
 }
+/*add transpercy */
+
+
+.backgroundOverlay2{
+  @apply absolute w-full 
+}
+
+.backgroundOverlay2::before {
+  backdrop-filter: blur(10px);
+  z-index: -10;
+  content: "";
+  @apply absolute inset-0 bg-cover bg-center;
+}
+
+.backgroundOverlay2::after {
+  content: "";
+  @apply absolute inset-0 bg-cover bg-center -z-10;
+  
+}
+
 /* add the scrollbar css */
 .bg-transparent{
-  @apply py-5 px-8  border-nav-border gap-4 transition ease-in-out delay-200	;
+  @apply py-5 px-8  border-nav-border gap-4 transition ease-in-out delay-200 	;
 }
 /* add the overaly on side */
 .backgroundOverlay {
-  @apply absolute z-[-50] min-h-screen 
+  @apply absolute z-[-50] min-h-[115vh]   ;
 }
 
 .backgroundOverlay::before {

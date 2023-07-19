@@ -13,9 +13,10 @@ function Info_j_z() {
 
   return (
     <>
-      <Navbar />
+      {isOpen ? <Navbar /> : null}
+
       <PageWrapper>
-        <section className="relative flex flex-col md:flex-row z-[4] min-h-screen ">
+        <section className="relative flex flex-col md:flex-row z-[4] overflow-scroll">
           <div
             className={`flex-start paddings min-h-screen flex  flex-row justify-center items-center  ${
               showBackgroundOverlay ? "backgroundOverlay" : ""
@@ -46,7 +47,7 @@ function Info_j_z() {
               <div className="pt-4">
                 {" "}
                 <AiOutlineClose
-                  className="relative z-10 w-[40px] items-end h-[40px] cursor-pointer"
+                  className="relative z-10 w-[40px] items-end h-auto  cursor-pointer"
                   onClick={() => setIsOpen(!isOpen)}
                 />
               </div>
@@ -54,8 +55,8 @@ function Info_j_z() {
             <PdfContainer />
           </motion.div>
         </section>
+        <Footer />
       </PageWrapper>
-      <Footer />
     </>
   );
 }

@@ -13,9 +13,10 @@ function Info_j_z() {
 
   return (
     <>
-      <Navbar />
+          {isOpen ? <Navbar /> : null}
+
       <PageWrapper>
-        <section className="relative flex flex-col md:flex-row z-[4] ">
+        <section className="relative flex flex-col md:flex-row z-[4] overflow-scroll">
           <div
             className={`flex-start paddings min-h-screen flex  flex-row justify-center items-center  ${
               showBackgroundOverlay ? "backgroundOverlay" : ""

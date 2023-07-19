@@ -10,8 +10,8 @@ export default function Home() {
       <Navbar />
       <PageWrapper>
        <TitleNavigation/>
+       <Footer/>
       </PageWrapper>
-  <Footer/>
 
     </>
   )
