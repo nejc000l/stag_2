@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { PageWrapper } from "../pageWrapper";
 import Navbar from "@/components/Navbar";
