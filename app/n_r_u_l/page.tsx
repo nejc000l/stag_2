@@ -1,4 +1,3 @@
-"use client";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import React, { useState } from "react";
@@ -6,7 +5,6 @@ import { PageWrapper } from "../pageWrapper";
 import PdfContainer from "@/components/PdfContainer";
 import { AiOutlineClose, AiOutlineFilePdf } from "react-icons/Ai";
 import { motion } from "framer-motion";
-
 function Info_j_z() {
   const [showBackgroundOverlay, setShowBackgroundOverlay] = useState(true);
   const [isOpen, setIsOpen] = useState(true);
