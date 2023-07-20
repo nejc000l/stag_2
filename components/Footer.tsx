@@ -14,7 +14,7 @@ function Footer() {
         {NavLinks.map((link) => (
             
           <Link href={link.href} key={link.key}>
-          <li className="">{link.text}</li>
+          <li className="list-none	">{link.text}</li>
         </Link>
       ))}
         </div>

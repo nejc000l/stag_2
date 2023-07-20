@@ -35,15 +35,15 @@ function Navbar() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  const fileMap: { [key: string]: string } = {
+  const routeMap: { [key: string]: string } = {
     '/':'/'
   };
   
-  let file = fileMap[router];
+  let file = routeMap[router];
   return (
     <nav
     className={`justify-between flex sticky top-0 z-[5] items-center text-white ${
-      isScrolled ? "navbar" : (file ? "bg-transparent " : (file ? 'no-blur' : "bg-transparent backgroundOverlay2"))
+      isScrolled ? "navbar" : (file ? "bg-transparent" : (file ? 'no-blur' : "bg-transparent backgroundOverlay2"))
     }`}
   >
   
