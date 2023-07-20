@@ -1,3 +1,4 @@
+"use client";
 
 import React, { useState } from "react";
 import { PageWrapper } from "../pageWrapper";
@@ -7,7 +8,8 @@ import PdfContainer from "@/components/PdfContainer";
 
 import { Disclosure, Transition } from "@headlessui/react";
 
-import { AiOutlineClose, AiOutlineFilePdf } from "react-icons/Ai";
+import {BsFileEarmarkPdf } from "react-icons/bs";
+import {MdClose} from "react-icons/md";
 import { motion } from "framer-motion";
 import { Data } from "../../constants/data";
 function Apk() {
@@ -29,7 +31,7 @@ function Apk() {
             <div className="flex  justify-start py-4 h-full  flex-col  mr-[15%] ml-[15%]  ">
               {isOpen === true ? (
                 <div>
-                  <AiOutlineFilePdf
+                  <BsFileEarmarkPdf
                     className="relative z-10 w-[40px] items-end h-[40px] cursor-pointer"
                     onClick={() => setIsOpen(!isOpen)}
                   />
@@ -157,7 +159,7 @@ function Apk() {
             ) : (
               <div className="pt-4 ">
                 {" "}
-                <AiOutlineClose
+                <MdClose 
               className="relative w-[40px] items-end h-auto  cursor-pointer"
                   onClick={() => setIsOpen(!isOpen)}
                 />

@@ -4,7 +4,8 @@ import { PageWrapper } from "../pageWrapper";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {Data} from '@/constants/data';
-import { AiOutlineClose, AiOutlineFilePdf } from "react-icons/Ai";
+import {BsFileEarmarkPdf } from "react-icons/bs";
+import {MdClose} from "react-icons/md";
 import PdfContainer from "@/components/PdfContainer";
 import { motion } from "framer-motion";
 function Info_j_z() {
@@ -24,7 +25,7 @@ function Info_j_z() {
             <div className="flex cursor-pointer py-4  flex-col paddings mr-[15%] ml-[15%] ">
               {isOpen === true ? (
                  <div>
-                 <AiOutlineFilePdf
+                 <BsFileEarmarkPdf
                    className="relative z-10 w-[40px] items-end h-[40px] cursor-pointer"
                    onClick={() => setIsOpen(!isOpen)}
                  />
@@ -54,7 +55,7 @@ function Info_j_z() {
             ) : (
               <div className="pt-4">
                 {" "}
-                <AiOutlineClose
+                <MdClose
                   className="relative z-10 w-[40px] items-end h-[40px] cursor-pointer"
                   onClick={() => setIsOpen(!isOpen)}
                 />

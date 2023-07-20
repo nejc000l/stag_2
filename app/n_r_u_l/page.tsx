@@ -1,9 +1,11 @@
+"use client";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import React, { useState } from "react";
 import { PageWrapper } from "../pageWrapper";
 import PdfContainer from "@/components/PdfContainer";
-import { AiOutlineClose, AiOutlineFilePdf } from "react-icons/Ai";
+import {BsFileEarmarkPdf } from "react-icons/bs";
+import {MdClose} from "react-icons/md";
 import { motion } from "framer-motion";
 function Info_j_z() {
   const [showBackgroundOverlay, setShowBackgroundOverlay] = useState(true);
@@ -23,7 +25,7 @@ function Info_j_z() {
             <div className="flex  justify-start py-4  flex-col  mr-[15%] ml-[15%] ">
               {isOpen === true ? (
                 <div>
-                <AiOutlineFilePdf
+                <BsFileEarmarkPdf
                   className="relative z-10 w-[40px] items-end h-[40px] cursor-pointer"
                   onClick={() => setIsOpen(!isOpen)}
                 />
@@ -61,7 +63,7 @@ function Info_j_z() {
             ) : (
               <div className="pt-4">
                 {" "}
-                <AiOutlineClose
+                <MdClose
                   className="relative z-10 w-[40px] items-end h-[40px] cursor-pointer"
                   onClick={() => setIsOpen(!isOpen)}
                 />
