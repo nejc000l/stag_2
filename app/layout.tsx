@@ -1,11 +1,7 @@
-"use client";
-import Navbar from "@/components/Navbar";
 import "./globals.css";
 import './TextLayer.css'
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import Footer from "@/components/Footer";
-import { motion, AnimatePresence } from "framer-motion";
 
 type Props = {
   children: any;
