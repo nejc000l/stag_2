@@ -178,7 +178,7 @@ body {
 
 
 .backgroundOverlay2{
-  @apply absolute w-full h-[50px];
+  @apply absolute w-full ;
 }
 
 .backgroundOverlay2::before {
