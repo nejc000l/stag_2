@@ -7,15 +7,20 @@ import { Transition } from "@headlessui/react";
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 
 function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(window.scrollY > 0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const router = usePathname()
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
-      setWindowWidth(window.innerWidth);
-    }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   useEffect(() => {

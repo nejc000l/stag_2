@@ -22,13 +22,13 @@ function Apk() {
 
       <PageWrapper>
         
-        <section className=" relative  flex flex-col z-[4] min-h-full overflow-scroll">
+    <section className=" relative  flex flex-col z-[4]  top-0 h-[100%] pb-24">
           <div
-            className={`flex-start top-0 absolute flex flex-col justify-center  ${
+            className={`flex-start  flex flex-col justify-center  ${
               showBackgroundOverlay ? "backgroundOverlay" : ""
             }`}
           >
-            <div className="flex  justify-start py-4 h-full  flex-col  mr-[10%] ml-[10%]  ">
+            <div className="flex  justify-start py-4 h-ful flex-col  mr-[10%] ml-[10%]  md:mr-[15%] md:ml-[15%] ">
               {isOpen === true ? (
                 <div>
                   <BsFileEarmarkPdf
@@ -44,11 +44,11 @@ function Apk() {
                 Afriška prašičja kuga(APK)
               </h1>
 
-              <h4 className="text-[9px] md:text-[16px] text-justify">
+              <h4 className="text-[9px] md:text-[16px] m-[10px] flex-wrap break-normal text-justify">
                 <div key={Data[0].key}>{Data[0].description}</div>
               </h4>
           <div className=" relative flex text-center justify-center flex-col ">
-                <div className="absolute w-full  top-0  pt-24">
+                <div className="absolute w-full h-[40vh] overflow-scroll top-0  pt-[1rem] p-[3rem]">
                 <Disclosure>
               <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px]  md:text-lg ">
                     Leto 2017
