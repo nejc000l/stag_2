@@ -1,14 +1,32 @@
 export const NavLinks = [
   {
+    href: "/",
+    key: "Domov",
+    text: "Domov",
+    shouldUnderline: true,
+  },
+  {
     href: "/info_j_z",
     key: "Informacije_j_z",
     text: "Informacije Javnega Značaja",
+    shouldUnderline: true,
   },
-  { href: "/apk", key: "Afriška_p_k", text: "Afrišska Prašičja kuga" },
+  {
+    href: "/apk",
+    key: "Afriška_p_k",
+    text: "Afrišska Prašičja kuga",
+    shouldUnderline: true,
+  },
   {
     href: "/n_r_u_l",
     key: "Načrt_r_u_l",
     text: "Načrt ravnanja upravljalca lovišča",
+    shouldUnderline: true,
   },
-  { href: "/novice", key: "Novice", text: "Novice" },
+  {
+    href: "/novice",
+    key: "Novice",
+    text: "Novice",
+    shouldUnderline: true,
+  },
 ];

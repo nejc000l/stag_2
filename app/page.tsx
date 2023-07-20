@@ -1,15 +1,18 @@
+import Navbar from '@/components/Navbar'
 import Image from 'next/image'
+import { PageWrapper } from './pageWrapper'
+import Footer from '@/components/Footer'
+import TitleNavigation from '@/components/TitleNavigation'
 
 export default function Home() {
   return (
-    <main >
-      <section className="flex-start flex-col paddings mb-16 min-h-screen">
-    <div className="flex-grow">
-    <h1>Categories</h1>
-      <h1>Posts</h1>
-      <h1>LoadMore</h1>
-    </div>
-  </section>
-    </main>
+    <>
+      <Navbar />
+      <PageWrapper>
+       <TitleNavigation/>
+       <Footer/>
+      </PageWrapper>
+
+    </>
   )
 }

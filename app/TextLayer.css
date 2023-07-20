@@ -1,0 +1,17 @@
+.react-pdf__Page__textContent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    line-height: 1;
+  }
+  
+  .react-pdf__Page__textContent span {
+    color: transparent;
+    white-space: pre;
+    position: absolute;
+    transform-origin: left top;
+  }
+  

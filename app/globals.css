@@ -4,14 +4,51 @@
 @tailwind components;
 @tailwind utilities;
 
+/*blure edge*/
+@layer components {
+  .react-pdf__Page__textContent .textLayer {
+    @apply m-auto w-4/5 h-full !important;
+  }
+  .no-blur {
+    backdrop-filter: none;
+  }
+  .blurEdge {
+    @apply relative;
+  }
+
+  .blurEdge::before,
+  .blurEdge::after {
+    content: "";
+    @apply absolute inset-0;
+  }
+
+  .blurEdge::before {
+    backdrop-filter: blur(10px);
+    z-index: -10;
+  }
+
+  .blurEdge::after {
+    background-image: linear-gradient(
+      to right,
+      rgba(4, 17, 4, 0.103) 10%,
+      transparent 50%,
+      rgba(1, 2, 0, 0.308),
+      transparent
+    );
+  }
+}
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
+header{
+  animation: slideIn 2s ease 1;
+  animation-delay: 0s;
+}
 body {
   font-family: Inter;
+
 }
 
 .flexCenter {
@@ -43,6 +80,8 @@ body {
   background: #888;
   border-radius: 12px;
 }
+ 
+
 
 .modal-head-text {
   @apply md:text-5xl text-3xl font-extrabold text-left max-w-5xl w-full;
@@ -127,14 +166,54 @@ body {
 .modal_wrapper {
   @apply flex justify-start items-center flex-col absolute h-[95%] w-full bottom-0 bg-white rounded-t-3xl lg:px-40 px-8 pt-14 pb-72 overflow-auto;
 }
-
+/*padding nav*/
+.paddingNav{
+    @apply py-[10px] px-0 ;
+  }
 /* Navbar */
 .navbar {
   @apply py-5 px-8  border-nav-border gap-4 bg-[#0c1607];
 }
+/*add transpercy */
+
+
+.backgroundOverlay2{
+  @apply absolute w-full 
+}
+
+.backgroundOverlay2::before {
+  backdrop-filter: blur(10px);
+  z-index: -10;
+  content: "";
+  @apply absolute inset-0 bg-cover bg-center;
+}
+
+.backgroundOverlay2::after {
+  content: "";
+  @apply absolute inset-0 bg-cover bg-center -z-10;
+  
+}
+
 /* add the scrollbar css */
 .bg-transparent{
-  @apply py-5 px-8  border-nav-border gap-4 transition ease-in-out delay-200	;
+  @apply py-5 px-8  border-nav-border gap-4 transition ease-in-out delay-200 	;
+}
+/* add the overaly on side */
+.backgroundOverlay {
+  @apply absolute z-[-50] min-h-[115vh]   ;
+}
+
+.backgroundOverlay::before {
+  backdrop-filter: blur(10px);
+  z-index: -10;
+  content: "";
+  @apply absolute inset-0 bg-cover bg-center;
+}
+
+.backgroundOverlay::after {
+  content: "";
+  @apply absolute inset-0 bg-cover bg-center -z-10;
+  background-image: linear-gradient(to right, black 40%, transparent 100%);
 }
 /* background image */
 .backgroundImage {
@@ -145,10 +224,11 @@ background-image: url('/images/stag3.jpg');
 /* Costum bakcgounrd */
 
 .backgroundImage {
-  @apply relative z-[-50]
+  @apply relative z-[-50] min-h-screen
 }
 
 .backgroundImage::before {
+
   content: "";
   @apply absolute inset-0 bg-cover bg-center;
 }
@@ -156,7 +236,7 @@ background-image: url('/images/stag3.jpg');
 .backgroundImage::after {
   content: "";
   @apply absolute inset-0 bg-cover bg-center z-[-100];
-  background-image: linear-gradient(to right, black 20%, transparent 60%);
+  background-image: linear-gradient(to top, rgb(0, 0, 0) 40%, transparent 100%);
 }
 /* Profile Menu */
 .profile_menu-items {
@@ -188,4 +268,9 @@ background-image: url('/images/stag3.jpg');
 /* Profile Projects */
 .profile_projects {
   @apply grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8 mt-5;
+}
+@media (max-width: 1244px) {
+  .backgroundOverlay {
+    width: 100%;
+  }
 }
