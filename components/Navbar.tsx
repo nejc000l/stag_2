@@ -7,22 +7,42 @@ import { Transition } from "@headlessui/react";
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import  {CgMenuGridO} from 'react-icons/cg'
 function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(window.scrollY > 0);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(0);
+
   const router = usePathname()
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    setIsScrolled(window.scrollY > 0);
+    setWindowWidth(window.innerWidth);
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      setIsMenuOpen(false);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
