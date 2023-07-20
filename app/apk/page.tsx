@@ -22,13 +22,13 @@ function Apk() {
 
       <PageWrapper>
         
-        <section className=" relative top-4 flex flex-col z-[4] min-h-full overflow-scroll">
+        <section className=" relative  flex flex-col z-[4] min-h-full overflow-scroll">
           <div
-            className={`flex-start paddings  flex flex-col justify-center  ${
+            className={`flex-start top-0 absolute flex flex-col justify-center  ${
               showBackgroundOverlay ? "backgroundOverlay" : ""
             }`}
           >
-            <div className="flex  justify-start py-4 h-full  flex-col  mr-[15%] ml-[15%]  ">
+            <div className="flex  justify-start py-4 h-full  flex-col  mr-[10%] ml-[10%]  ">
               {isOpen === true ? (
                 <div>
                   <BsFileEarmarkPdf
@@ -40,17 +40,17 @@ function Apk() {
               ) : (
                 ""
               )}
-              <h1 className="py-4 font-bold text-4xl md:text-4xl	">
+              <h1 className="py-4 font-bold text-2xl md:text-4xl	">
                 Afriška prašičja kuga(APK)
               </h1>
 
-              <h4 className="text-[12px] md:text-[16px] text-justify">
+              <h4 className="text-[9px] md:text-[16px] text-justify">
                 <div key={Data[0].key}>{Data[0].description}</div>
               </h4>
-          <div className=" relative flex text-center justify-center flex-col overflow-scroll h-[20vh] w-[100%]">
-                <div className="p-[4rem]">
+          <div className=" relative flex text-center justify-center flex-col ">
+                <div className="absolute w-full  top-0  pt-24">
                 <Disclosure>
-              <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px] md:text-lg ">
+              <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px]  md:text-lg ">
                     Leto 2017
                   </Disclosure.Button>
                   <Transition
@@ -70,7 +70,6 @@ function Apk() {
                     </Disclosure.Panel>
                   </Transition>
                 </Disclosure>
-                </div>
                 <div>
 
                 <Disclosure>
@@ -142,6 +141,8 @@ function Apk() {
                     </Disclosure.Panel>
                   </Transition>
                 </Disclosure>
+                </div>
+
              </div>
               </div>
 
