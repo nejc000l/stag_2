@@ -22,7 +22,7 @@ function Apk() {
 
       <PageWrapper>
         
-        <section className=" relative flex flex-col z-[4] overflow-scroll">
+        <section className=" relative top-4 flex flex-col z-[4] min-h-full overflow-scroll">
           <div
             className={`flex-start paddings  flex flex-col justify-center  ${
               showBackgroundOverlay ? "backgroundOverlay" : ""
@@ -32,7 +32,7 @@ function Apk() {
               {isOpen === true ? (
                 <div>
                   <BsFileEarmarkPdf
-                    className="relative z-10 w-[40px] items-end h-[40px] cursor-pointer"
+                    className="relative z-10 w-[40px] items-end h-[40px] md:w-[40px] md:h-[40px] cursor-pointer"
                     onClick={() => setIsOpen(!isOpen)}
                   />
                   <span>Odpri PDF</span>
@@ -40,17 +40,17 @@ function Apk() {
               ) : (
                 ""
               )}
-              <h1 className="py-4 font-bold text-4xl	">
+              <h1 className="py-4 font-bold text-4xl md:text-4xl	">
                 Afriška prašičja kuga(APK)
               </h1>
 
-              <h4 className="text-[12px] sm:text-[16px] text-justify">
+              <h4 className="text-[12px] md:text-[16px] text-justify">
                 <div key={Data[0].key}>{Data[0].description}</div>
               </h4>
-              <div className="p-4 relative mt-4 ">
-                <div>
+          <div className=" relative flex text-center justify-center flex-col overflow-scroll h-[20vh] w-[100%]">
+                <div className="p-[4rem]">
                 <Disclosure>
-              <Disclosure.Button className="p-4 m-4 mainColorLight ">
+              <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px] md:text-lg ">
                     Leto 2017
                   </Disclosure.Button>
                   <Transition
@@ -62,7 +62,7 @@ function Apk() {
                     leaveTo="transform scale-95 opacity-0"
                   >
                     <Disclosure.Panel>
-                      <li className="p-4 ">
+                      <li className="p-4 text-[9px] flex-wrap md:text-[14px]">
                         V letu 2017 je bilo v Evropi prijavljenih 4.002 pojavov
                         APK pri divjih prašičih in 265 pojavov pri domačih
                         prašičih.
@@ -74,7 +74,7 @@ function Apk() {
                 <div>
 
                 <Disclosure>
-                  <Disclosure.Button className="p-4 m-4 mainColorLight ">
+                  <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px]  md:text-lg">
                     Leto 2018
                   </Disclosure.Button>
                   <Transition
@@ -86,7 +86,7 @@ function Apk() {
                     leaveTo="transform scale-95 opacity-0"
                   >
                     <Disclosure.Panel>
-                      <li className="p-4">
+                      <li className=" p-4 text-[9px] flex-wrap md:text-[14px]">
                         V letu 2018 je bilo v Evropi prijavljenih 5.429 pojavov
                         APK pri divjih prašičih in 1.465 pojavov pri domačih
                         prašičih.
@@ -98,7 +98,7 @@ function Apk() {
               <div>
 
                 <Disclosure>
-                  <Disclosure.Button className="p-4 m-4 mainColorLight  ">
+                  <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px] md:text-lg ">
                     Leto 2019
                   </Disclosure.Button>
                   <Transition
@@ -110,7 +110,7 @@ function Apk() {
                     leaveTo="transform scale-95 opacity-0"
                   >
                     <Disclosure.Panel>
-                      <li className="p-4">
+                      <li className="p-4 text-[9px] flex-wrap md:text-[14px]">
                         V letu 2019 je bilo v Evropi prijavljenih 6.456 pojavov
                         APK pri divjih prašičih in 1.912 pojavov pri domačih
                         prašičih.
@@ -122,7 +122,7 @@ function Apk() {
              <div>
 
                 <Disclosure>
-                  <Disclosure.Button className="p-4 m-4 mainColorLight ">
+                  <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px] md:text-lg ">
                     Leto 2020
                   </Disclosure.Button>
                   <Transition
@@ -134,7 +134,7 @@ function Apk() {
                     leaveTo="transform scale-95 opacity-0"
                   >
                     <Disclosure.Panel>
-                      <li className="p-4 ">
+                      <li className="p-4 text-[9px] flex-wrap md:text-[14px] ">
                         V letu 2020 je bilo v Evropi prijavljenih 11.208 pojavov
                         APK pri divjih prašičih in 1.247 pojavov pri domačih
                         prašičih.
@@ -145,7 +145,7 @@ function Apk() {
              </div>
               </div>
 
-              <span className="pt-4 text-sm font-light">
+              <span className="pt-4 text-[9px] md:text-[12px] font-light">
                 Spremenjeno: 19.04.2022 ob 16.08
               </span>
             </div>

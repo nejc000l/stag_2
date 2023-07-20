@@ -172,13 +172,13 @@ body {
   }
 /* Navbar */
 .navbar {
-  @apply py-5 px-8  border-nav-border gap-4 bg-[#0c1607];
+  @apply py-5 px-8  border-nav-border gap-4 bg-[#0c1607] ;
 }
 /*add transpercy */
 
 
 .backgroundOverlay2{
-  @apply absolute w-full 
+  @apply absolute w-full h-[50px];
 }
 
 .backgroundOverlay2::before {
@@ -200,7 +200,7 @@ body {
 }
 /* add the overaly on side */
 .backgroundOverlay {
-  @apply absolute z-[-50] min-h-[115vh]   ;
+  @apply absolute z-[-50]  min-h-full  ;
 }
 
 .backgroundOverlay::before {
@@ -269,8 +269,9 @@ background-image: url('/images/stag3.jpg');
 .profile_projects {
   @apply grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8 mt-5;
 }
-@media (max-width: 1244px) {
+@media (max-width: 1280px) {
   .backgroundOverlay {
     width: 100%;
+    min-height: 100%;
   }
 }

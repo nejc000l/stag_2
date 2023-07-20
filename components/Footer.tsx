@@ -5,7 +5,7 @@ import React from "react";
 
 function Footer() {
   return (
-    <footer className=" flex flex-start footer  relative  ">
+    <footer className=" flex flex-start footer  relative text-[12px] md:text-lg  ">
       <div className="">
         <div className="flex items-start flex-col">
           Vidergarjeva ulica 13 Ljubljana 1261 LJUBLJANA-DOBRUNJE
