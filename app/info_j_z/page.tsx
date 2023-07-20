@@ -1,10 +1,9 @@
+"use client";
 import { useState } from "react";
 import { PageWrapper } from "../pageWrapper";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Tab } from "@headlessui/react";
 import {Data} from '@/constants/data';
-import { CiMenuBurger } from "react-icons/Ci";
 import { AiOutlineClose, AiOutlineFilePdf } from "react-icons/Ai";
 import PdfContainer from "@/components/PdfContainer";
 import { motion } from "framer-motion";

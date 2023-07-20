@@ -8,11 +8,9 @@ import PdfContainer from "@/components/PdfContainer";
 
 import { Disclosure, Transition } from "@headlessui/react";
 
-import { CiMenuBurger } from "react-icons/Ci";
 import { AiOutlineClose, AiOutlineFilePdf } from "react-icons/Ai";
 import { motion } from "framer-motion";
 import { Data } from "../../constants/data";
-import { Description } from "@headlessui/react/dist/components/description/description";
 function Apk() {
   const [showBackgroundOverlay, setShowBackgroundOverlay] = useState(true);
   const [isOpen, setIsOpen] = useState(true);
