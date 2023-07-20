@@ -5,7 +5,7 @@ import { NavLinks } from "@/constants";
 import Link from "next/link";
 import { Transition } from "@headlessui/react";
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-
+import  {CgMenuGridO} from 'react-icons/cg'
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(window.scrollY > 0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -50,7 +50,7 @@ function Navbar() {
       <div className="flex-1 flexStart gap-10">
         <Link href="/">
           <Image
-            src="/Images/LZS_logo_90.png"
+            src="/images/LZS_logo_90.png"
             width={144}
             height={40}
             alt="Flexible"
@@ -98,10 +98,10 @@ function Navbar() {
       ) : (
         <>
          <button
-              className="text-[12px]"
+              className=" text-[24px] "
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? "Pokaži manj" : "Pokaži več"}
+      {isMenuOpen ? <CgMenuGridO width={"50px"} height={"50px"}/>:<CgMenuGridO  width={"50px"} height={"50px"}/>}
             </button>
           <div>
             <Transition className="w-96 "

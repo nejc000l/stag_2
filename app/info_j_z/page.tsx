@@ -16,32 +16,32 @@ function Info_j_z() {
            {isOpen ? <Navbar /> : null}
 
       <PageWrapper>
-        <section className="relative flex flex-col md:flex-row z-[4] overflow-scroll">
+    <section className=" relative  flex flex-col z-[4]  top-0 h-[100%] pb-24">
           <div
             className={`paddings min-h-screen flex  flex-row justify-center items-center  ${
               showBackgroundOverlay ? "backgroundOverlay" : ""
             } w-full`}
           >
-            <div className="flex cursor-pointer py-4  flex-col paddings mr-[15%] ml-[15%] ">
+            <div className="flex  justify-start py-4 h-ful flex-col  mr-[10%] ml-[10%]  md:mr-[15%] md:ml-[15%]  ">
               {isOpen === true ? (
                  <div>
                  <BsFileEarmarkPdf
-                   className="relative z-10 w-[40px] items-end h-[40px] cursor-pointer"
+                   className="relative z-10 w-[40px] items-end h-[40px] md:w-[40px] md:h-[40px] cursor-pointer"
                    onClick={() => setIsOpen(!isOpen)}
                  />
-                 <span>Odpri PDF</span>
+             <span className="text-sm"> Odpri PDF</span>
                  </div>
               ) : (
                 ""
               )}
 
-              <h1 className="py-4 font-bold text-4xl 	">
+              <h1 className="py-4 font-bold text-2xl md:text-4xl">
                 Infomarcije Javnega značaja
               </h1>
-              <h4 className="text-[12px] sm:text-[16px] text-justify ">
+              <h4 className="text-[9px] md:text-[16px] m-[10px] flex-wrap break-normal text-justify">
               <div key={Data[1].key}>{Data[1].description}</div>
               </h4>
-              <span className="pt-4 text-sm font-light">
+              <span className="pt-4 text-[9px] md:text-[12px] font-light">
                 Spremenjeno: 19.04.2022 ob 16.08
               </span>
             </div>

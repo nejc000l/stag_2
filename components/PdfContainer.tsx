@@ -8,6 +8,7 @@ function PdfContainer() {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [selectedPage, setSelectedPage] = useState(1);
+  
   const pathname = usePathname()
   function onDocumentLoadSuccess({ numPages: nextNumPages }: any) {
     setNumPages(nextNumPages);
@@ -18,17 +19,19 @@ function PdfContainer() {
     '/n_r_u_l': '/Nacrt_ravnanja_APK.pdf',
     '/novice': '/zapisnik.pdf'
   };
-  
+
+
   let file = fileMap[pathname];
+
   return (
     <div className="w-[100%] ">
       <div className=" min-h-screen   paddings  blurEdge  shadow-4xl">
-        <div className="relative mr-[20%] ml-[20%] z-[2] ">
+        <div className="relative  z-[2] ">
           <nav className="w-[100%] paddingNav  ">
           </nav>
           <div className="w-full overflow-scroll flex justify-center ">
             <div className=" text-center  ">
-             <iframe className="p-4" height={600} width={600}  src={file} ></iframe>
+             <iframe className="p-4" height={600} width={600} src={file} ></iframe>
             </div>
           </div>
         </div>

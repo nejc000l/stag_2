@@ -13,10 +13,10 @@ function TitleNavigation() {
   return (
     <div className="h-screen paddings relative flex items-center justify-center">
       <div className="flex flex-col items-center justify-center ">
-        <h1 className="text-[2rem] sm:text-4xl lg:text-8xl text-[#72451f] font-semibold">
-          Lovska Družina Pugled
-        </h1>
-        <ul className="relative text-center flex flex-col py-10 font-light">
+        <div className="  font-semibold text-center ">
+    <h6 className="md:text-4xl text-sm underline decoration-4 text-[#173b19]"> Lovska Družina </h6> <h1 className="text-4xl md:text-8xl drop-shadow-lg 	 text-[#aa730e]" >Pugled </h1>
+        </div>
+        <ul className="relative text-center flex flex-col py-10 font-light ">
         {NavLinks.slice(1).map((link: NavLink) => {
   const linkClass = link.shouldUnderline ? ' py-4 hover:underline' : 'py-4';
   return (
