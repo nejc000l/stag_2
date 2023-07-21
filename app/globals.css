@@ -217,18 +217,10 @@ body {
 }
 /* background image */
 .backgroundImage {
-@apply absolute inset-0 bg-cover bg-center;
+@apply relative w-[1920px] h-[1080px] inset-0 bg-cover bg-center;
 background-image: url('/images/stag3.jpg');
-
 }
-/* Costum bakcgounrd */
-
-.backgroundImage {
-  @apply relative z-[-50] min-h-screen
-}
-
 .backgroundImage::before {
-
   content: "";
   @apply absolute inset-0 bg-cover bg-center;
 }

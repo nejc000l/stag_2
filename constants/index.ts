@@ -14,7 +14,7 @@ export const NavLinks = [
   {
     href: "/apk",
     key: "Afriška_p_k",
-    text: "Afrišska Prašičja kuga",
+    text: "Afriška Prašičja kuga",
     shouldUnderline: true,
   },
   {
@@ -29,4 +29,10 @@ export const NavLinks = [
     text: "Novice",
     shouldUnderline: true,
   },
+  {
+    href: "/kontakt",
+    key: "Kontakt",
+    email: ' ld.pugled@gmail.com',
+    vodja:'Starešina: Grčar Borja-Miki'
+  }
 ];
