@@ -11,7 +11,7 @@ function Footer() {
           Vidergarjeva ulica 13 Ljubljana 1261 LJUBLJANA-DOBRUNJE
         </div>
         <div className="flex flex-wrap  ">
-        {NavLinks.map((link) => (
+        {NavLinks.slice(0,5).map((link) => (
             
           <Link className="pr-6" 
             href={link.href} key={link.key}>

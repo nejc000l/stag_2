@@ -217,7 +217,7 @@ body {
 }
 /* background image */
 .backgroundImage {
-@apply relative w-[1920px] h-[1080px] inset-0 bg-cover bg-center;
+@apply relative   inset-0 bg-cover bg-center;
 background-image: url('/images/stag3.jpg');
 }
 .backgroundImage::before {

@@ -30,7 +30,7 @@ export const NavLinks = [
     shouldUnderline: true,
   },
   {
-    href: "/kontakt",
+    href: "/",
     key: "Kontakt",
     email: ' ld.pugled@gmail.com',    
     text: "",
