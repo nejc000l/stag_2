@@ -24,7 +24,7 @@ function Apk() {
       {isOpen ? <Navbar /> : null}
 
       <PageWrapper>
-        <section className=" relative  flex flex-col z-[4]  top-0 h-[100%] pb-24">
+        <section className=" relative  flex flex-col z-[4]  top-0 h-[100%] ">
           <div
             className={`flex-start  flex flex-col justify-center  ${
               showBackgroundOverlay ? "backgroundOverlay" : ""

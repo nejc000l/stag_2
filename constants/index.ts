@@ -32,7 +32,8 @@ export const NavLinks = [
   {
     href: "/kontakt",
     key: "Kontakt",
-    email: ' ld.pugled@gmail.com',
+    email: ' ld.pugled@gmail.com',    
+    text: "",
     vodja:'Starešina: Grčar Borja-Miki'
   }
 ];
