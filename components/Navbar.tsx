@@ -35,6 +35,11 @@ function Navbar() {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
       setIsMenuOpen(false);
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
     };
 
     window.addEventListener('resize', handleResize);
@@ -42,19 +47,10 @@ function Navbar() {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-      setIsMenuOpen(false);
-    };
 
-    window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
   }, []);
+
   const routeMap: { [key: string]: string } = {
     '/':'/'
   };
