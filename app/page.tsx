@@ -4,7 +4,8 @@ import { PageWrapper } from './pageWrapper'
 import Footer from '@/components/Footer'
 import TitleNavigation from '@/components/TitleNavigation'
 
-export default function Home() {
+export default async function Home() {
+
   return (
     <>
       <Navbar />

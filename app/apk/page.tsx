@@ -1,23 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PageWrapper } from "../pageWrapper";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PdfContainer from "@/components/PdfContainer";
-
 import { Disclosure, Transition } from "@headlessui/react";
 
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
 import { motion } from "framer-motion";
-import { Data } from "../../constants/data";
+
 function Apk() {
   const [showBackgroundOverlay, setShowBackgroundOverlay] = useState(true);
   const [isOpen, setIsOpen] = useState(true);
   const [showRest, setShowRest] = useState(false);
 
- const [firstSentence, secondSentence, thirdSentence, fourthSentence] = Data[0].description.split('.').slice(0, 4);
+
+  let firstSentence, secondSentence, thirdSentence, fourthSentence;
+
+  //if (data) {
+    //[firstSentence, secondSentence, thirdSentence, fourthSentence] =
+      //data[1].Text.split(".").slice(0, 4); }
   
   return (
     <>
@@ -42,23 +46,12 @@ function Apk() {
               ) : (
                 ""
               )}
-              <h1 className="py-4 font-bold text-2xl md:text-4xl	">
-                Afriška prašičja kuga(APK)
+              <h1 className="py-4 font-bold text-2xl md:text-4xl">
               </h1>
 
               <h4 className="text-[9px] md:text-[16px] m-[10px] flex-wrap break-normal text-justify">
-                <div key={Data[0].key}>
-                {firstSentence}. {secondSentence}. {thirdSentence}. {fourthSentence}.
-                  {showRest &&
-                    Data[0].description.slice(
-                      firstSentence.length + secondSentence.length + 4
-                    )}
-                  <span
-                    onClick={() => setShowRest(!showRest)}
-                    className="text-[#3f8629d3] font-bold cursor-pointer"
-                  >
-            {showRest ?  <span className="text-[9px] md:text-lg"> Pokaži manj</span> : <span className="text-[9px] md:text-lg"> Pokaži več</span> }
-                  </span>
+                <div>
+                  
                 </div>
               </h4>
               <div className=" relative flex text-center justify-center flex-col ">
