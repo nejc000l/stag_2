@@ -1,37 +1,113 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import { getData } from "../app/server-renderd/page";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-
-function PdfContainer() {
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [selectedPage, setSelectedPage] = useState(1);
-  
-  const pathname = usePathname()
-  function onDocumentLoadSuccess({ numPages: nextNumPages }: any) {
-    setNumPages(nextNumPages);
-  }
-  const fileMap: { [key: string]: string } = {
-    '/info_j_z': '/LD_Pugled_Katalog_javnega.pdf',
-    '/apk': '/ZNUAPK.pdf',
-    '/n_r_u_l': '/Nacrt_ravnanja_APK.pdf',
-    '/novice': '/zapisnik.pdf'
+import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import supabase from "@/utils/supabase";
+interface File {
+  name: string;
+  id: string;
+  last_accessed_at: Date;
+  updated_at: Date;
+  created_at: Date;
+}
+function PdfContainer({
+  name,
+  id,
+  last_accessed_at,
+  updated_at,
+  created_at,
+}: File) {
+  const [data, setData] = useState<any[] | null>(null);
+  const [message, setMessage] = useState("");
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+    try {
+      const result = await getData();
+      setData(result);
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
   };
-
-
-  let file = fileMap[pathname];
-
+  const loadStorage = async () => {
+    try {
+      const { data: files, error } = await supabase.storage.from("pdf").list();
+      return files;
+    } catch (error) {
+      console.log("Error loading storage:", error);
+      return [];
+    }
+  };
+  const handleUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    try {
+      if (!e.target.files) return;
+      const file = e.target.files[0];
+      const files = await loadStorage();
+      const fileExists = files.some((f) => f.name === file.name);
+      if (fileExists) {
+        setMessage(`File with name ${file.name} already exists in storage`);
+      } else {
+        const { data, error } = await supabase.storage
+          .from("pdf")
+          .upload("PdfFiles/" + file.name, file);
+        if (data) {
+          setUploadedFile(file);
+          setMessage("success✅");
+          setTimeout(() => {
+            setMessage("");
+          }, 5000);
+          console.log("File uploaded:", data);
+        } else if (error) {
+          let countdown = 5;
+          const intervalId = setInterval(() => {
+            setMessage(
+              `There was an error ❌ You can try again in ${countdown} seconds`
+            );
+            countdown--;
+            if (countdown < 0) {
+              clearInterval(intervalId);
+              setMessage("");
+            }
+          }, 1000);
+          console.log("Error uploading file:", error);
+        }
+      }
+    } catch (error) {
+      console.log("Error handling upload:", error);
+    }
+  };
+  const handleRemove = () => {
+    setUploadedFile(null);
+  };
   return (
     <div className="w-[100%] ">
       <div className=" min-h-screen   paddings  blurEdge  shadow-4xl">
         <div className="relative  z-[2] ">
-          <nav className="w-[100%] paddingNav  ">
-          </nav>
+          <nav className="w-[100%] paddingNav  "></nav>
           <div className="w-full overflow-scroll flex justify-center ">
-            <div className=" text-center  ">
-             <iframe className="p-4" height={600} width={600} src={file} ></iframe>
+            <div className=" text-center flex items-center justify-center ">
+              <input
+                type="file"
+                accept="pdf/*"
+                className="block w-auto text-sm"
+                id="file_input"
+                onChange={(e) => {
+                  handleUpload(e);
+                }}
+              />
+              <p>{message}</p>
+              {uploadedFile && (
+                <>
+                  <p>Uploaded file: {uploadedFile.name}</p>
+                  <button className="m-5 text-red-500" onClick={handleRemove}>
+                    Remove
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -39,5 +115,4 @@ function PdfContainer() {
     </div>
   );
 }
-
 export default PdfContainer;

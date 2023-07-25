@@ -6,23 +6,35 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PdfContainer from "@/components/PdfContainer";
 import { Disclosure, Transition } from "@headlessui/react";
-
+import { getData } from "../server-renderd/page";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
 import { motion } from "framer-motion";
+import Harmonica from "@/components/Harmonica";
+import { format } from 'date-fns';
 
 function Apk() {
   const [showBackgroundOverlay, setShowBackgroundOverlay] = useState(true);
   const [isOpen, setIsOpen] = useState(true);
   const [showRest, setShowRest] = useState(false);
+  const [data, setData] = useState<any[] | null>(null);
 
+  useEffect(() => {
+    async function fetchData() {
+      let result = await getData();
+      setData(result);
+  result.map((item: any) => console.log(item));
+    }
+    fetchData();
+  }, []);
 
   let firstSentence, secondSentence, thirdSentence, fourthSentence;
 
-  //if (data) {
-    //[firstSentence, secondSentence, thirdSentence, fourthSentence] =
-      //data[1].Text.split(".").slice(0, 4); }
-  
+  if (data) {
+    [firstSentence, secondSentence, thirdSentence, fourthSentence] =
+      data[1].Text.split(".").slice(0, 4);
+  }
+
   return (
     <>
       {isOpen ? <Navbar /> : null}
@@ -47,110 +59,38 @@ function Apk() {
                 ""
               )}
               <h1 className="py-4 font-bold text-2xl md:text-4xl">
+                {data && <div>{data[1].Title}</div>}
               </h1>
-
               <h4 className="text-[9px] md:text-[16px] m-[10px] flex-wrap break-normal text-justify">
                 <div>
-                  
+                  {data && (
+                    <div key={data[1].key}>
+                      {firstSentence}.{secondSentence}.{thirdSentence}.
+                      {fourthSentence}.
+                      {showRest &&
+                        data[1].Text.slice(
+                          firstSentence.length + secondSentence.length + 4
+                        )}
+                    </div>
+                  )}
+                  <span
+                    onClick={() => setShowRest(!showRest)}
+                    className="text-[#3f8629d3] font-bold cursor-pointer"
+                  >
+                    {showRest ? (
+                      <span className="text-[9px] md:text-lg">Pokaži manj</span>
+                    ) : (
+                      <span className="text-[9px] md:text-lg"> Pokaži več</span>
+                    )}
+                  </span>
                 </div>
               </h4>
               <div className=" relative flex text-center justify-center flex-col ">
-                <div className="absolute w-full h-[40vh] overflow-scroll top-0  pt-[1rem] p-[3rem]">
-                  <Disclosure>
-                    <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px]  md:text-lg ">
-                      Leto 2017
-                    </Disclosure.Button>
-                    <Transition
-                      enter="transition duration-100 ease-out"
-                      enterFrom="transform scale-95 opacity-0"
-                      enterTo="transform scale-100 opacity-100"
-                      leave="transition duration-75 ease-out"
-                      leaveFrom="transform scale-100 opacity-100"
-                      leaveTo="transform scale-95 opacity-0"
-                    >
-                      <Disclosure.Panel>
-                        <li className="p-4 text-[9px] flex-wrap md:text-[14px]">
-                          V letu 2017 je bilo v Evropi prijavljenih 4.002
-                          pojavov APK pri divjih prašičih in 265 pojavov pri
-                          domačih prašičih.
-                        </li>
-                      </Disclosure.Panel>
-                    </Transition>
-                  </Disclosure>
-                  <div>
-                    <Disclosure>
-                      <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px]  md:text-lg">
-                        Leto 2018
-                      </Disclosure.Button>
-                      <Transition
-                        enter="transition duration-100 ease-out"
-                        enterFrom="transform scale-95 opacity-0"
-                        enterTo="transform scale-100 opacity-100"
-                        leave="transition duration-75 ease-out"
-                        leaveFrom="transform scale-100 opacity-100"
-                        leaveTo="transform scale-95 opacity-0"
-                      >
-                        <Disclosure.Panel>
-                          <li className=" p-4 text-[9px] flex-wrap md:text-[14px]">
-                            V letu 2018 je bilo v Evropi prijavljenih 5.429
-                            pojavov APK pri divjih prašičih in 1.465 pojavov pri
-                            domačih prašičih.
-                          </li>
-                        </Disclosure.Panel>
-                      </Transition>
-                    </Disclosure>
-                  </div>
-                  <div>
-                    <Disclosure>
-                      <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px] md:text-lg ">
-                        Leto 2019
-                      </Disclosure.Button>
-                      <Transition
-                        enter="transition duration-100 ease-out"
-                        enterFrom="transform scale-95 opacity-0"
-                        enterTo="transform scale-100 opacity-100"
-                        leave="transition duration-75 ease-out"
-                        leaveFrom="transform scale-100 opacity-100"
-                        leaveTo="transform scale-95 opacity-0"
-                      >
-                        <Disclosure.Panel>
-                          <li className="p-4 text-[9px] flex-wrap md:text-[14px]">
-                            V letu 2019 je bilo v Evropi prijavljenih 6.456
-                            pojavov APK pri divjih prašičih in 1.912 pojavov pri
-                            domačih prašičih.
-                          </li>
-                        </Disclosure.Panel>
-                      </Transition>
-                    </Disclosure>
-                  </div>
-                  <div>
-                    <Disclosure>
-                      <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px] md:text-lg ">
-                        Leto 2020
-                      </Disclosure.Button>
-                      <Transition
-                        enter="transition duration-100 ease-out"
-                        enterFrom="transform scale-95 opacity-0"
-                        enterTo="transform scale-100 opacity-100"
-                        leave="transition duration-75 ease-out"
-                        leaveFrom="transform scale-100 opacity-100"
-                        leaveTo="transform scale-95 opacity-0"
-                      >
-                        <Disclosure.Panel>
-                          <li className="p-4 text-[9px] flex-wrap md:text-[14px] ">
-                            V letu 2020 je bilo v Evropi prijavljenih 11.208
-                            pojavov APK pri divjih prašičih in 1.247 pojavov pri
-                            domačih prašičih.
-                          </li>
-                        </Disclosure.Panel>
-                      </Transition>
-                    </Disclosure>
-                  </div>
-                </div>
+                <Harmonica />
               </div>
 
               <span className="pt-4 text-[9px] md:text-[12px] font-light">
-                Spremenjeno: 19.04.2022 ob 16.08
+                Objavljeno: {data && <>{format(new Date(data[1].created_at), "  kk:mm dd/M/yyy")}</>}
               </span>
             </div>
           </div>
