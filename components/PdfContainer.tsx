@@ -21,16 +21,25 @@ function PdfContainer() {
         .from("pdf")
         .list("PdfFiles");
       setLoadData(files);
-      console.log(loadData?.map((file) => file));
+      // console.log(loadData?.map((file) => file));
       return setLoadData;
     };
     loadStorage();
   }, []);
-  // Storage and upload part of the code_______________________________________________________________________________
   let pdfName = loadData?.map((file) => file.name);
-  let firstPdfName = pdfName?.[0];
+  let firstPdfName = pdfName;
+  if (firstPdfName) {
+    for (let i = 0; i < firstPdfName.length; i++) {
+      firstPdfName[i] = firstPdfName[i].slice()[0];
+      console.log(firstPdfName[i]);
+    }
+  }
+
   let link = `https://xjdkqmvgsfixvpbzprye.supabase.co/storage/v1/object/public/pdf/PdfFiles/${firstPdfName}`;
   console.log(link);
+
+  // Storage and upload part of the code_______________________________________________________________________________
+
   const loadStorage = async () => {
     try {
       const { data: files, error } = await supabase.storage
