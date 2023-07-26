@@ -7,8 +7,8 @@ import { BsFileEarmarkPdf } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
 import PdfContainer from "@/components/PdfContainer";
 import { motion } from "framer-motion";
-import { getData } from "../server-renderd/page";
-import { format } from 'date-fns';
+
+import { format } from "date-fns";
 function Info_j_z() {
   const [showBackgroundOverlay, setShowBackgroundOverlay] = useState(true);
   const [isOpen, setIsOpen] = useState(true);
@@ -37,13 +37,9 @@ function Info_j_z() {
                 ""
               )}
 
-              <h1 className="py-4 font-bold text-2xl md:text-4xl">
-              </h1>
-              <h4 className="text-[9px] md:text-[16px] m-[10px] flex-wrap break-normal text-justify">
-              </h4>
-              <span className="pt-4 text-[9px] md:text-[12px] font-light">
-            
-              </span>
+              <h1 className="py-4 font-bold text-2xl md:text-4xl"></h1>
+              <h4 className="text-[9px] md:text-[16px] m-[10px] flex-wrap break-normal text-justify"></h4>
+              <span className="pt-4 text-[9px] md:text-[12px] font-light"></span>
             </div>
           </div>
           <motion.div

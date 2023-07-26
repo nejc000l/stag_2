@@ -6,27 +6,17 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PdfContainer from "@/components/PdfContainer";
 import { Disclosure, Transition } from "@headlessui/react";
-import { getData } from "../server-renderd/page";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
 import { motion } from "framer-motion";
 import Harmonica from "@/components/Harmonica";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
 function Apk() {
   const [showBackgroundOverlay, setShowBackgroundOverlay] = useState(true);
   const [isOpen, setIsOpen] = useState(true);
   const [showRest, setShowRest] = useState(false);
   const [data, setData] = useState<any[] | null>(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      let result = await getData();
-      setData(result);
-  result.map((item: any) => console.log(item));
-    }
-    fetchData();
-  }, []);
 
   let firstSentence, secondSentence, thirdSentence, fourthSentence;
 
@@ -90,7 +80,12 @@ function Apk() {
               </div>
 
               <span className="pt-4 text-[9px] md:text-[12px] font-light">
-                Objavljeno: {data && <>{format(new Date(data[1].created_at), "  kk:mm dd/M/yyy")}</>}
+                Objavljeno:{" "}
+                {data && (
+                  <>
+                    {format(new Date(data[1].created_at), "  kk:mm dd/M/yyy")}
+                  </>
+                )}
               </span>
             </div>
           </div>
