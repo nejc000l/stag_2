@@ -2,120 +2,93 @@
 
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
-import { getData } from "../app/server-renderd/page";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import supabase from "@/utils/supabase";
-import { v4 as uuidv4 } from "uuid";
-
+interface File {
+  name: string;
+}
 function PdfContainer() {
   const [message, setMessage] = useState("");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [data, setData] = useState<any[] | null>(null);
-  const [id, setId] = useState(1);
+  const [loadData, setLoadData] = useState<File[] | null>(null);
+
   // use effect hook part _____________________________________________________________
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getData();
-        setData(result);
-      } catch (error) {
-        console.log("Error fetching data:", error);
-      }
+    const loadStorage = async () => {
+      const { data: files, error } = await supabase.storage
+        .from("pdf")
+        .list("PdfFiles");
+      setLoadData(files);
+      console.log(loadData?.map((file) => file));
+      return setLoadData;
     };
-    fetchData();
+    loadStorage();
   }, []);
-
   // Storage and upload part of the code_______________________________________________________________________________
-
+  let pdfName = loadData?.map((file) => file.name);
+  let firstPdfName = pdfName?.[0];
+  let link = `https://xjdkqmvgsfixvpbzprye.supabase.co/storage/v1/object/public/pdf/PdfFiles/${firstPdfName}`;
+  console.log(link);
   const loadStorage = async () => {
     try {
-      const { data: files, error } = await supabase.storage.from("pdf").list();
+      const { data: files, error } = await supabase.storage
+        .from("pdf")
+        .list("PdfFiles");
+
       return files;
     } catch (error) {
       console.log("Error loading storage:", error);
       return [];
     }
   };
+
   const handleUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-
     try {
       if (!e.target.files) return;
-
       const file = e.target.files[0];
-      const files = await loadStorage();
       const storageData = await loadStorage();
       const filename = `${"PdfFiles/" + file.name}`;
+      // Check if file already exists
+      const fileExists = storageData?.some((f) => f.name === file.name);
+      if (fileExists) {
+        setMessage(`File with name ${file.name} already exists in storage`);
+        return;
+      }
+      // Upload the file
+      const { data, error } = await supabase.storage
+        .from("pdf")
+        .upload(filename, file, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+      if (data) {
+        setUploadedFile(file);
+        setMessage("success✅");
+        console.log("File uploaded:", data);
 
-      // Check if storage is empty
-      if (files?.length === 0) {
-        // Upload the file
-        const { data, error } = await supabase.storage
-          .from("pdf")
-          .upload(filename, file, {
-            cacheControl: "3600",
-            upsert: false,
-          });
-        if (data) {
-          setUploadedFile(file);
-          setMessage("success✅");
-          console.log("File uploaded:", data);
-
-          // Store uploaded file in localStorage
-          localStorage.setItem("uploadedFile", JSON.stringify(storageData));
-        } else if (error) {
-          let countdown = 5;
-          const intervalId = setInterval(() => {
-            setMessage(
-              `There was an error ❌ You can try again in ${countdown} seconds`
-            );
-            countdown--;
-            if (countdown < 0) {
-              clearInterval(intervalId);
-              setMessage("");
-            }
-          }, 1000);
-          console.log("Error uploading file:", error);
-        }
-      } else {
-        // Storage is not empty, check if file already exists
-        const fileExists = files?.some((f) => f.name === file.name);
-        if (fileExists) {
-          setMessage(`File with name ${file.name} already exists in storage`);
-        } else {
-          // Upload the file
-          const { data, error } = await supabase.storage
-            .from("pdf")
-            .upload(filename, file);
-          if (data) {
-            setUploadedFile(file);
-            setMessage("success✅");
-            console.log("File uploaded:", data);
-
-            // Store uploaded file in localStorage
-            localStorage.setItem("uploadedFile", JSON.stringify(storageData));
-          } else if (error) {
-            let countdown = 5;
-            const intervalId = setInterval(() => {
-              setMessage(
-                `There was an error ❌ You can try again in ${countdown} seconds`
-              );
-              countdown--;
-              if (countdown < 0) {
-                clearInterval(intervalId);
-                setMessage("");
-              }
-              const inputElement =
-                document.querySelector<HTMLInputElement>("#file_input");
-              if (inputElement) {
-                inputElement.value = "";
-              }
-            }, 1000);
-            console.log("Error uploading file:", error);
+        // Store uploaded file in localStorage
+        localStorage.setItem("uploadedFile", JSON.stringify(storageData));
+      } else if (error) {
+        let countdown = 5;
+        const intervalId = setInterval(() => {
+          setMessage(
+            `There was an error ❌ You can try again in ${countdown} seconds`
+          );
+          countdown--;
+          if (countdown < 0) {
+            clearInterval(intervalId);
+            setMessage("");
           }
-        }
+          const inputElement =
+            document.querySelector<HTMLInputElement>("#file_input");
+          if (inputElement) {
+            inputElement.value = "";
+          }
+        }, 1000);
+        console.log("Error uploading file:", error);
       }
     } catch (error) {
       console.log("Error handling upload:", error);
