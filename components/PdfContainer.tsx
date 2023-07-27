@@ -1,31 +1,35 @@
 "use client";
 
 import React, { useState, useEffect, ChangeEvent } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
+
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import supabase from "@/utils/supabase";
-interface File {
+
+type loadData = {
   name: string;
-}
+  id: string;
+  updated_at: string;
+};
 function PdfContainer() {
   const [message, setMessage] = useState("");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [loadData, setLoadData] = useState<File[] | null>(null);
+  const [loadData, setLoadData] = useState<loadData[] | null>(null);
 
   // use effect hook part _____________________________________________________________
   useEffect(() => {
     const loadStorage = async () => {
-      const { data: files, error } = await supabase.storage
+      const { data: file, error } = await supabase.storage
         .from("pdf")
         .list("PdfFiles");
-      setLoadData(files);
-      // console.log(loadData?.map((file) => file));
+      setLoadData(file);
+
       return setLoadData;
     };
     loadStorage();
   }, []);
+
+  useEffect(() => {}, []);
   let pdfName = loadData?.map((file) => file.name);
   let firstPdfName = pdfName;
   if (firstPdfName) {
