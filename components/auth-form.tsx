@@ -8,14 +8,13 @@ export default function AuthForm() {
   const supabase = createClientComponentClient<Database>();
 
   return (
-    <div className="relative">
+    <div className="relative m-auto w-[50%] px-8 py-[140px]  z-[100]">
       <Auth
         supabaseClient={supabase}
-        view="magic_link"
         appearance={{ theme: ThemeSupa }}
         theme="dark"
         showLinks={false}
-        providers={[]}
+        providers={["google"]}
         redirectTo="http://localhost:3000/auth/callback"
       />
     </div>

@@ -28,7 +28,6 @@ function PdfContainer() {
     };
     loadStorage();
   }, []);
-
   useEffect(() => {}, []);
   let pdfName = loadData?.map((file) => file.name);
   let firstPdfName = pdfName;

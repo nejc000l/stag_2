@@ -3,17 +3,27 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { NavLinks } from "@/constants";
 import Link from "next/link";
+import { FC } from "react";
+
 import { Transition } from "@headlessui/react";
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import  {CgMenuGridO} from 'react-icons/cg'
-function Navbar() {
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { CgMenuGridO } from "react-icons/cg";
+import { RiAdminLine } from "react-icons/ri";
+interface NavbarProps {
+  toggleAuth: () => void;
+}
+/**
+ * TODO I have to fix the button for the menu and place it inside the div and make it relative
+ */
+
+const Navbar: FC<NavbarProps> = ({ toggleAuth }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
 
-  const router = usePathname()
+  const router = usePathname();
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     setIsScrolled(window.scrollY > 0);
     setWindowWidth(window.innerWidth);
@@ -22,15 +32,15 @@ function Navbar() {
       setIsScrolled(window.scrollY > 0);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -42,37 +52,46 @@ function Navbar() {
       };
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
-
-
   }, []);
 
   const routeMap: { [key: string]: string } = {
-    '/':'/'
+    "/": "/",
   };
-  
+
   let file = routeMap[router];
   return (
     <nav
-    className={`justify-between flex sticky top-0 z-[5] items-center text-white ${
-      isScrolled ? "navbar" : (file ? "bg-transparent" : (file ? 'no-blur' : "bg-transparent backgroundOverlay2"))
-    }`}
-  >
-  
+      className={`justify-between flex sticky top-0 z-[5] items-center text-white ${
+        isScrolled
+          ? "navbar"
+          : file
+          ? "bg-transparent"
+          : file
+          ? "no-blur"
+          : "bg-transparent backgroundOverlay2"
+      }`}
+    >
       <div className="flex-1 flexStart gap-10">
         <Link href="/">
           <Image
             src="/images/LZS_logo_90.png"
             width={144}
             height={40}
-            alt="Flexible"
+            alt="LZS-logo"
           />
         </Link>
       </div>
+      <div className="flex items-center">
+        <button className="w-4 h-4 ">
+          <RiAdminLine width={24} height={24} onClick={toggleAuth} />
+        </button>
+      </div>
+
       {windowWidth >= 1280 ? (
         <>
           <ul className="xl:flex text-small gap-7">
@@ -83,7 +102,7 @@ function Navbar() {
             ))}
           </ul>
           <div className="transform relative left-[-10%] ">
-            <Transition 
+            <Transition
               show={isMenuOpen}
               enter="transition duration-200 ease-out"
               enterFrom="transform -translate-y-full opacity-0"
@@ -101,7 +120,6 @@ function Navbar() {
               </ul>
             </Transition>
           </div>
-
           {NavLinks.length > 4 && (
             <button
               className="text-[12px]"
@@ -113,14 +131,19 @@ function Navbar() {
         </>
       ) : (
         <>
-         <button
-              className=" text-[24px] "
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-      {isMenuOpen ? <CgMenuGridO width={"50px"} height={"50px"}/>:<CgMenuGridO  width={"50px"} height={"50px"}/>}
-            </button>
+          <button
+            className=" text-[24px] "
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? (
+              <CgMenuGridO width={"50px"} height={"50px"} />
+            ) : (
+              <CgMenuGridO width={"50px"} height={"50px"} />
+            )}
+          </button>
           <div>
-            <Transition className="w-96 "
+            <Transition
+              className="w-96 "
               show={isMenuOpen}
               enter="transition duration-200 ease-out "
               enterFrom="transform -translate-y-full opacity-0"
@@ -142,6 +165,6 @@ function Navbar() {
       )}
     </nav>
   );
-}
+};
 
 export default Navbar;

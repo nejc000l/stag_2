@@ -27,7 +27,13 @@ function Apk() {
 
   return (
     <>
-      {isOpen ? <Navbar /> : null}
+      {isOpen ? (
+        <Navbar
+          toggleAuth={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
+      ) : null}
 
       <PageWrapper>
         <section className=" relative  flex flex-col z-[4]  top-0 h-[100%] ">
