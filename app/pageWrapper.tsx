@@ -2,9 +2,9 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 type Props = {
-    children:any
-}
-export const PageWrapper = ({ children }:Props) => (
+  children: any;
+};
+export const PageWrapper = ({ children }: Props) => (
   <>
     <AnimatePresence>
       <motion.div

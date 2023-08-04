@@ -9,30 +9,58 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      profiles: {
+      pages: {
         Row: {
           avatar_url: string | null;
+          href: string | null;
+          id: string;
+          profile_id: string;
+          text: string | null;
+          title: string | null;
+        };
+        Insert: {
+          avatar_url?: string | null;
+          href?: string | null;
+          id?: string;
+          profile_id: string;
+          text?: string | null;
+          title?: string | null;
+        };
+        Update: {
+          avatar_url?: string | null;
+          href?: string | null;
+          id?: string;
+          profile_id?: string;
+          text?: string | null;
+          title?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "pages_profile_id_fkey";
+            columns: ["profile_id"];
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      profiles: {
+        Row: {
           full_name: string | null;
           id: string;
           updated_at: string | null;
           username: string | null;
-          website: string | null;
         };
         Insert: {
-          avatar_url?: string | null;
           full_name?: string | null;
           id: string;
           updated_at?: string | null;
           username?: string | null;
-          website?: string | null;
         };
         Update: {
-          avatar_url?: string | null;
           full_name?: string | null;
           id?: string;
           updated_at?: string | null;
           username?: string | null;
-          website?: string | null;
         };
         Relationships: [
           {

@@ -87,9 +87,11 @@ const Navbar: FC<NavbarProps> = ({ toggleAuth }) => {
         </Link>
       </div>
       <div className="flex items-center">
-        <button className="w-4 h-4 ">
-          <RiAdminLine width={24} height={24} onClick={toggleAuth} />
-        </button>
+        {router === "/" && (
+          <button className="w-4 h-4 ">
+            <RiAdminLine width={24} height={24} onClick={toggleAuth} />
+          </button>
+        )}
       </div>
 
       {windowWidth >= 1280 ? (

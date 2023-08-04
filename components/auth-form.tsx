@@ -1,22 +1,78 @@
 "use client";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Database } from "@/types/supabase";
 
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import type { Database } from "@/types/supabase";
 export default function AuthForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
   const supabase = createClientComponentClient<Database>();
+  const [message, setMessage] = useState("");
+
+  const handleSignUp = async () => {
+    await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${location.origin}/auth/callback`,
+      },
+    });
+    router.refresh();
+  };
+
+  const handleSignIn = async () => {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) {
+        console.error(error);
+        setMessage("Your email or password is incorrect.");
+      } else {
+        console.log(data?.user);
+        router.push("/account");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    router.refresh();
+  };
 
   return (
-    <div className="relative m-auto w-[50%] px-8 py-[140px]  z-[100]">
-      <Auth
-        supabaseClient={supabase}
-        appearance={{ theme: ThemeSupa }}
-        theme="dark"
-        showLinks={false}
-        providers={["google"]}
-        redirectTo="http://localhost:3000/auth/callback"
-      />
-    </div>
+    <>
+      <div className="flex relative z-10 text-red-300 justify-center items-center flex-col">
+        <input
+          name="email"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+          className="m-4 p-4"
+        />
+        <input
+          type="password"
+          name="password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          className="m-4 p-4"
+        />
+        <button className="m-4 p-4" onClick={handleSignUp}>
+          Sign up
+        </button>
+        <button className=" m-4 p-4" onClick={handleSignIn}>
+          Sign in
+        </button>
+        <button className="m-4 p-4" onClick={handleSignOut}>
+          Sign out
+        </button>
+        <div>{message}</div>
+      </div>
+    </>
   );
 }

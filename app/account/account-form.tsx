@@ -5,12 +5,19 @@ import {
   Session,
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
-
+// import Avatar from "./avatar";
+interface UpdateProfileParams {
+  title: string | null;
+  href: any | null;
+  text: any | null;
+  avatar_url: any | null;
+}
 export default function AccountForm({ session }: { session: Session | null }) {
   const supabase = createClientComponentClient<Database>();
   const [loading, setLoading] = useState(true);
-  const [fullname, setFullname] = useState<string | null>(null);
-  const [username, setUsername] = useState<string | null>(null);
+  const [pass, setPass] = useState<any | null>(null);
+  const [username, setUsername] = useState<any | null>(null);
+  const [website, setWebsite] = useState<string | null>(null);
   const user = session?.user;
 
   const getProfile = useCallback(async () => {
@@ -18,9 +25,9 @@ export default function AccountForm({ session }: { session: Session | null }) {
       setLoading(true);
 
       let { data, error, status } = await supabase
-        .from("post")
-        .select(`full_name, username`)
-        .eq("id", user?.id)
+        .from("pages")
+        .select(`title, href, text, avatar_url`)
+        .eq("profile_id", user?.id)
         .single();
 
       if (error && status !== 406) {
@@ -28,8 +35,8 @@ export default function AccountForm({ session }: { session: Session | null }) {
       }
 
       if (data) {
-        setFullname(data.full_name);
-        setUsername(data.username);
+        setPass(data.title);
+        setUsername(data.href);
       }
     } catch (error) {
       alert("Error loading user data!");
@@ -43,67 +50,74 @@ export default function AccountForm({ session }: { session: Session | null }) {
   }, [user, getProfile]);
 
   async function updateProfile({
-    username,
-    website,
+    title,
+    text,
+    href,
     avatar_url,
-  }: {
-    username: string | null;
-    fullname: string | null;
-    website: string | null;
-    avatar_url: string | null;
-  }) {
+  }: UpdateProfileParams) {
     try {
       setLoading(true);
+      if (user) {
+        let { data, error } = await supabase
+          .from("pages")
+          .update({
+            title,
+            text,
+            href,
+            avatar_url,
+          })
+          .match({ profile_id: user.id });
+        if (error) {
+          console.error(error);
+          throw error;
+        }
 
-      let { error } = await supabase.from("profiles").upsert({
-        id: user?.id as string,
-        full_name: fullname,
-        username,
-        website,
-        avatar_url,
-        updated_at: new Date().toISOString(),
-      });
-      if (error) throw error;
-      alert("Profile updated!");
+        alert("Profile updated!");
+      }
     } catch (error) {
+      console.error(error);
       alert("Error updating the data!");
     } finally {
       setLoading(false);
     }
   }
-
   return (
-    <div className="form-widget relative">
+    <div className="form-widget flex flex-col z-4 relative items-center justify-center h-screen text-red-400 gap-4">
       <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={session?.user.email} disabled />
+        <label htmlFor="email"></label>
+        <span id="email" />
       </div>
       <div>
-        <label htmlFor="fullName">Full Name</label>
-        <input
-          id="fullName"
-          type="text"
-          value={fullname || ""}
-          onChange={(e) => setFullname(e.target.value)}
-        />
+        <label className="m-4" htmlFor="fullName">
+          Full Name: {username}
+        </label>
       </div>
       <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          type="text"
-          value={username || ""}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+        <label className="m-4" htmlFor="username">
+          password: {pass}
+        </label>
       </div>
+      <input
+        type="text"
+        name="fullName"
+        id="fullName"
+        value={pass}
+        onChange={(e) => setPass(e.target.value)}
+      />
+      <button
+        onClick={() =>
+          updateProfile({
+            title: pass,
+            href: pass,
+            text: pass,
+            avatar_url: pass,
+          })
+        }
+      >
+        update
+      </button>
       <div>
-        <label htmlFor="website">Website</label>
-      </div>
-
-      <div></div>
-
-      <div>
-        <form action="/auth/signout" method="post">
+        <form action="/auth/singout" method="post">
           <button className="button block" type="submit">
             Sign out
           </button>

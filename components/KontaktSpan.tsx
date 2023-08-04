@@ -4,18 +4,18 @@ import React from "react";
 function KontaktSpan() {
   return (
     <>
-      <span className=" m-[1rem] flex flex-col  text-[12px] gap-[2px] items-center">
+      <div className=" m-[1rem] flex flex-col  text-[12px] gap-[2px] items-center">
         {NavLinks.map((link) => (
-          <span className="font-light text-[#c5cec5]" key={link.key}>
+          <div className="font-light text-[#c5cec5]" key={link.key}>
             {link.email}
-          </span>
+          </div>
         ))}
         {NavLinks.map((link) => (
-          <span className="font-light text-[#c3ccc3]" key={link.key}>
+          <div className="font-light text-[#c3ccc3]" key={link.key}>
             {link.vodja}
-          </span>
+          </div>
         ))}
-      </span>
+      </div>
     </>
   );
 }
