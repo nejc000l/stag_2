@@ -1,24 +1,29 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import { Database } from "@/types/supabase";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   Session,
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
 // import Avatar from "./avatar";
-interface UpdateProfileParams {
+interface UpdatePagesParams {
   title: string | null;
-  href: any | null;
+  href: string | null;
   text: any | null;
   avatar_url: any | null;
 }
 export default function AccountForm({ session }: { session: Session | null }) {
   const supabase = createClientComponentClient<Database>();
   const [loading, setLoading] = useState(true);
-  const [pass, setPass] = useState<any | null>(null);
-  const [username, setUsername] = useState<any | null>(null);
-  const [website, setWebsite] = useState<string | null>(null);
+  const [title, setTitle] = useState<any | null>(null);
+  const [text, setText] = useState<string | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState<any | null>(null);
+  const [href, setHref] = useState<any | null>(null);
   const user = session?.user;
+  const notify = () => toast("Profile updated!");
 
   const getProfile = useCallback(async () => {
     try {
@@ -35,8 +40,10 @@ export default function AccountForm({ session }: { session: Session | null }) {
       }
 
       if (data) {
-        setPass(data.title);
-        setUsername(data.href);
+        setTitle(data.title);
+        setHref(data.href);
+        setText(data.text);
+        setAvatarUrl(data.avatar_url);
       }
     } catch (error) {
       alert("Error loading user data!");
@@ -49,12 +56,12 @@ export default function AccountForm({ session }: { session: Session | null }) {
     getProfile();
   }, [user, getProfile]);
 
-  async function updateProfile({
+  async function updatePages({
     title,
     text,
     href,
     avatar_url,
-  }: UpdateProfileParams) {
+  }: UpdatePagesParams) {
     try {
       setLoading(true);
       if (user) {
@@ -71,8 +78,6 @@ export default function AccountForm({ session }: { session: Session | null }) {
           console.error(error);
           throw error;
         }
-
-        alert("Profile updated!");
       }
     } catch (error) {
       console.error(error);
@@ -81,41 +86,112 @@ export default function AccountForm({ session }: { session: Session | null }) {
       setLoading(false);
     }
   }
+  const updatePageF = () => {
+    updatePages({
+      title: title,
+      href: href,
+      text: text,
+      avatar_url: avatarUrl,
+    });
+    notify();
+  };
+  async function createPages({
+    title,
+    text,
+    href,
+    avatar_url,
+  }: UpdatePagesParams) {
+    try {
+      setLoading(true);
+      if (user) {
+        let { data, error } = await supabase.from("pages").insert({
+          title,
+          text,
+          href,
+          avatar_url,
+          profile_id: user.id,
+        });
+        if (error) {
+          console.error(error);
+          throw error;
+        }
+        alert("Page created!");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error creating the page!");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="form-widget flex flex-col z-4 relative items-center justify-center h-screen text-red-400 gap-4">
       <div>
         <label htmlFor="email"></label>
         <span id="email" />
       </div>
+
       <div>
-        <label className="m-4" htmlFor="fullName">
-          Full Name: {username}
+        <label className="m-4" htmlFor="username">
+          title: {title}
         </label>
+        <input
+          type="text"
+          name="fullName"
+          id="fullName"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
       </div>
       <div>
         <label className="m-4" htmlFor="username">
-          password: {pass}
+          avatar_url: {avatarUrl}
         </label>
+        <input
+          type="text"
+          name="avatar_url"
+          id="avatar_url"
+          value={avatarUrl}
+          onChange={(e) => setAvatarUrl(e.target.value)}
+        />
       </div>
-      <input
-        type="text"
-        name="fullName"
-        id="fullName"
-        value={pass}
-        onChange={(e) => setPass(e.target.value)}
-      />
+      <div>
+        <label className="m-4" htmlFor="username">
+          {`${location.origin}` + `/${href}`}
+        </label>
+        <input
+          type="text"
+          name="href"
+          id="href"
+          value={href}
+          onChange={(e) => setHref(e.target.value)}
+        />
+      </div>
+      <div className="flex overflow-hidden h-auto">
+        <h4 className="m-4 w-[20rem] break-words">{text}</h4>
+        <textarea
+          onChange={(e) => setText(e.target.value)}
+          className="w-[20rem] h-[20rem] p-[10px] overflow-wrap: break-word; word-break: break-all;"
+        ></textarea>
+      </div>
+
+      <button onClick={updatePageF}>Update</button>
+      <ToastContainer />
+
       <button
         onClick={() =>
-          updateProfile({
-            title: pass,
-            href: pass,
-            text: pass,
-            avatar_url: pass,
+          createPages({
+            title: title,
+            text: text,
+            href: href,
+            avatar_url: avatarUrl,
           })
         }
       >
-        update
+        Create Page
       </button>
+
       <div>
         <form action="/auth/singout" method="post">
           <button className="button block" type="submit">
