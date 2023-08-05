@@ -8,6 +8,7 @@ import {
   Session,
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
+import Navbar from "@/components/Navbar";
 // import Avatar from "./avatar";
 interface UpdatePagesParams {
   title: string | null;
@@ -93,7 +94,19 @@ export default function AccountForm({ session }: { session: Session | null }) {
       text: text,
       avatar_url: avatarUrl,
     });
-    notify();
+    const showToastMessage = () => {
+      toast.success("Profile updated!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    };
+    showToastMessage();
   };
   async function createPages({
     title,
@@ -126,79 +139,94 @@ export default function AccountForm({ session }: { session: Session | null }) {
   }
 
   return (
-    <div className="form-widget flex flex-col z-4 relative items-center justify-center h-screen text-red-400 gap-4">
-      <div>
-        <label htmlFor="email"></label>
-        <span id="email" />
-      </div>
-
-      <div>
-        <label className="m-4" htmlFor="username">
-          title: {title}
-        </label>
-        <input
-          type="text"
-          name="fullName"
-          id="fullName"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-      <div>
-        <label className="m-4" htmlFor="username">
-          avatar_url: {avatarUrl}
-        </label>
-        <input
-          type="text"
-          name="avatar_url"
-          id="avatar_url"
-          value={avatarUrl}
-          onChange={(e) => setAvatarUrl(e.target.value)}
-        />
-      </div>
-      <div>
-        <label className="m-4" htmlFor="username">
-          {`${location.origin}` + `/${href}`}
-        </label>
-        <input
-          type="text"
-          name="href"
-          id="href"
-          value={href}
-          onChange={(e) => setHref(e.target.value)}
-        />
-      </div>
-      <div className="flex overflow-hidden h-auto">
-        <h4 className="m-4 w-[20rem] break-words">{text}</h4>
-        <textarea
-          onChange={(e) => setText(e.target.value)}
-          className="w-[20rem] h-[20rem] p-[10px] overflow-wrap: break-word; word-break: break-all;"
-        ></textarea>
-      </div>
-
-      <button onClick={updatePageF}>Update</button>
-      <ToastContainer />
-
-      <button
-        onClick={() =>
-          createPages({
-            title: title,
-            text: text,
-            href: href,
-            avatar_url: avatarUrl,
-          })
-        }
-      >
-        Create Page
-      </button>
-
-      <div>
-        <form action="/auth/singout" method="post">
-          <button className="button block" type="submit">
-            Sign out
+    <>
+      <Navbar
+        toggleAuth={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
+      <div className="pt-[6rem] flex flex-col z-4 relative items-center justify-center h-screen text-[#2b671cd8] gap-4">
+        <div className="w-full flex items-center justify-center">
+          <label className="m-4" htmlFor="username">
+            title: {title}
+          </label>
+          <input
+            type="text"
+            name="fullName"
+            id="fullName"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div className="justify-center items-center  flex w-full">
+          <label className="m-4" htmlFor="username">
+            avatar_url: {avatarUrl}
+          </label>
+          <input
+            type="text"
+            name="avatar_url"
+            id="avatar_url"
+            value={avatarUrl}
+            onChange={(e) => setAvatarUrl(e.target.value)}
+          />
+        </div>
+        <div className="w-full items-center flex justify-center">
+          <label className="m-4" htmlFor="username">
+            {`${location.origin}` + `/${href}`}
+          </label>
+          <input
+            type="text"
+            name="href"
+            id="href"
+            value={href}
+            onChange={(e) => setHref(e.target.value)}
+          />
+        </div>
+        <div className="w-ful flex overflow-hidden h-auto">
+          <h4 className="m-4 w-[20rem] break-words">{text}</h4>
+          <textarea
+            onChange={(e) => setText(e.target.value)}
+            className="w-[20rem] h-[20rem] p-[10px] overflow-wrap: break-word; word-break: break-all;"
+          ></textarea>
+        </div>
+        <div className="text-white">
+          <button onClick={updatePageF}>Update</button>
+          <ToastContainer
+            className="toaster-container"
+            position="top-center"
+            autoClose={111111100}
+            hideProgressBar={true}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+          />
+        </div>
+        <div className="text-white">
+          <button
+            onClick={() =>
+              createPages({
+                title: title,
+                text: text,
+                href: href,
+                avatar_url: avatarUrl,
+              })
+            }
+          >
+            Create Page
           </button>
-        </form>
+        </div>
+        <div className="text-white">
+          <form action="/auth/singout" method="post">
+            <button className="button block" type="submit">
+              Sign out
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

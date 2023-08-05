@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import type { Database } from "@/types/supabase";
+
 export default function AuthForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -47,8 +48,8 @@ export default function AuthForm() {
   };
 
   return (
-    <>
-      <div className="flex relative z-10 text-red-300 justify-center items-center flex-col">
+    <div>
+      <div className="flex relative z-4 text-[#2b671cd8] justify-center items-center flex-col">
         <input
           name="email"
           onChange={(e) => setEmail(e.target.value)}
@@ -73,6 +74,6 @@ export default function AuthForm() {
         </button>
         <div>{message}</div>
       </div>
-    </>
+    </div>
   );
 }
