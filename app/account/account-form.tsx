@@ -174,7 +174,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
                   type="text"
                   name="fullName"
                   id="fullName"
-                  value={title}
+                  value={title === null ? "" : title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
@@ -191,7 +191,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
                   type="text"
                   name="avatar_url"
                   id="avatar_url"
-                  value={avatarUrl}
+                  value={avatarUrl === null ? "" : avatarUrl}
                   onChange={(e) => setAvatarUrl(e.target.value)}
                 />
               </div>
@@ -208,7 +208,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
                   type="text"
                   name="href"
                   id="href"
-                  value={href}
+                  value={href === null ? "" : href}
                   onChange={(e) => setHref(e.target.value)}
                 />
               </div>
@@ -221,7 +221,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
                 <textarea
                   className="w-[20rem] h-[10rem] p-[10px] overflow-wrap: break-word; word-break: break-all;"
                   onChange={(e) => setText(e.target.value)}
-                  value={text}
+                  value={text === null ? "" : text}
                   maxLength={600}
                 />
               </div>
