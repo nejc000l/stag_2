@@ -2,8 +2,7 @@
 // import React, { useEffect, useState } from "react";
 // import { Database } from "@/types/supabase";
 // import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-// import Image from "next/image";
-// type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
+// type pages = Database["public"]["Tables"]["pages"]["Row"];
 
 // export default function Avatar({
 //   uid,
@@ -12,12 +11,12 @@
 //   onUpload,
 // }: {
 //   uid: string | undefined;
-//   url: Profiles["avatar_url"];
+//   url: pages["avatar_url"];
 //   size: number;
 //   onUpload: (url: string) => void;
 // }) {
 //   const supabase = createClientComponentClient<Database>();
-//   const [avatarUrl, setAvatarUrl] = useState<Profiles["avatar_url"]>(url);
+//   const [avatarUrl, setAvatarUrl] = useState<pages["avatar_url"]>(url);
 //   const [uploading, setUploading] = useState(false);
 
 //   useEffect(() => {
