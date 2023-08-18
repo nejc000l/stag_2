@@ -9,12 +9,12 @@ import {
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
 import Navbar from "@/components/Navbar";
-// import Avatar from "./avatar";
+import Avatar from "./avatar";
 interface UpdatePagesParams {
   title: any;
   href: string;
   text: any;
-  avatar_url: any;
+  avatar: any;
 }
 export default function AccountForm({ session }: { session: Session | null }) {
   const supabase = createClientComponentClient<Database>();
@@ -22,7 +22,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
   const [messg, setMessg] = useState("");
   const [title, setTitle] = useState<any | null>(null);
   const [text, setText] = useState<any | null>(null);
-  const [avatarUrl, setAvatarUrl] = useState<any | null>(null);
+  const [avatar, setAvatar] = useState<any | null>(null);
   const [href, setHref] = useState<any | null>("");
   const user = session?.user;
   const notify = () => toast("Profile updated!");
@@ -32,7 +32,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
       setLoading(true);
       let { data, error, status } = await supabase
         .from("pages")
-        .select(`title, href, text, avatar_url`)
+        .select(`title, href, text, avatar`)
         .eq("profile_id", user?.id)
         .order("id", { ascending: false })
         .limit(1)
@@ -46,7 +46,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
         setTitle(data.title);
         setHref(data.href);
         setText(data.text);
-        setAvatarUrl(data.avatar_url);
+        setAvatar(data.avatar);
       } else {
         setMessg(
           "There is no data on this page please add data to your database! 📁"
@@ -63,12 +63,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
     getProfile();
   }, [user, getProfile]);
 
-  async function updatePages({
-    title,
-    text,
-    href,
-    avatar_url,
-  }: UpdatePagesParams) {
+  async function updatePages({ title, text, href, avatar }: UpdatePagesParams) {
     try {
       setLoading(true);
       if (user) {
@@ -78,7 +73,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
             title,
             text,
             href,
-            avatar_url,
+            avatar,
           })
           .match({ profile_id: user.id })
           .order("id", { ascending: false })
@@ -101,11 +96,11 @@ export default function AccountForm({ session }: { session: Session | null }) {
       title: title,
       href: href,
       text: text,
-      avatar_url: avatarUrl,
+      avatar: avatar,
     });
 
     const showToastMessage = () => {
-      toast.success("Profile updated!", {
+      toast.success("Page updated!", {
         position: "top-center",
         autoClose: 1000,
         hideProgressBar: false,
@@ -118,12 +113,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
     };
     showToastMessage();
   };
-  async function createPages({
-    title,
-    text,
-    href,
-    avatar_url,
-  }: UpdatePagesParams) {
+  async function createPages({ title, text, href, avatar }: UpdatePagesParams) {
     try {
       setLoading(true);
       if (user) {
@@ -131,21 +121,29 @@ export default function AccountForm({ session }: { session: Session | null }) {
           title,
           text,
           href,
-          avatar_url,
+          avatar,
           profile_id: user.id,
         });
         if (error) {
-          console.error(error);
           throw error;
         }
-        alert("Page created!");
       }
-    } catch (error) {
-      console.error(error);
-      alert("Error creating the page!");
     } finally {
       setLoading(false);
     }
+    const showToastMessage = () => {
+      toast.success("Page Created!", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    };
+    showToastMessage();
   }
 
   return (
@@ -183,34 +181,39 @@ export default function AccountForm({ session }: { session: Session | null }) {
           <div className="justify-center items-center  flex w-full">
             {user && (
               <div>
-                <label className="m-4" htmlFor="username">
-                  avatar_url: {avatarUrl}
-                </label>
-                <input
-                  className="p-2"
-                  type="text"
-                  name="avatar_url"
-                  id="avatar_url"
-                  value={avatarUrl === null ? "" : avatarUrl}
-                  onChange={(e) => setAvatarUrl(e.target.value)}
-                />
+                <div className="flex justify-center">
+                  <Avatar
+                    uid={user.id}
+                    url={avatar}
+                    size={150}
+                    onUpload={(url) => {
+                      setAvatar(url);
+                      updatePageF();
+                    }}
+                  />
+                </div>
               </div>
             )}
           </div>
-          <div className="w-full items-center flex justify-center">
+          <div className="w-full items-center flex justify-center ">
             {user && (
-              <div>
+              <div className="flex justify-center ">
                 <label className="m-4" htmlFor="username">
-                  {`${location.origin}` + `/${href}`}
+                  {`${location.origin ? location.origin : ""}/${
+                    href === null ? "" : href.slice(0, 20)
+                  }`}
                 </label>
+
                 <input
-                  className="p-2"
+                  className="p-2 w-96"
                   type="text"
                   name="href"
                   id="href"
                   value={href === null ? "" : href}
                   onChange={(e) => setHref(e.target.value)}
-                />
+                  maxLength={20}
+                  placeholder="URL vsebovati mora _med presledki"
+                ></input>
               </div>
             )}
           </div>
@@ -250,7 +253,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
                   title: title,
                   text: text,
                   href: href,
-                  avatar_url: avatarUrl,
+                  avatar: avatar,
                 })
               }
             >
