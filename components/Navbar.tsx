@@ -1,25 +1,54 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { NavLinks } from "@/constants";
 import Link from "next/link";
+import { Database } from "@/types/supabase";
+import {
+  Session,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs";
+
 import { FC } from "react";
 
 import { Transition } from "@headlessui/react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { CgMenuGridO } from "react-icons/cg";
 import { RiAdminLine } from "react-icons/ri";
+import { UrlObject } from "url";
 interface NavbarProps {
   toggleAuth: () => void;
+  session: Session | null;
+}
+interface NavLink {
+  href: any;
+  title: any;
 }
 /**
  * TODO I have to fix the button for the menu and place it inside the div and make it relative
  */
 
-const Navbar: FC<NavbarProps> = ({ toggleAuth }) => {
+const Navbar: FC<NavbarProps> = ({ toggleAuth, session }) => {
+  const supabase = createClientComponentClient<Database>();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
+  const [navLinks, setNavLinks] = useState<NavLink[]>([]);
+  const user = session?.user;
+  const getProfile = async () => {
+    let { data, error, status } = await supabase
+      .from("pages")
+      .select("href,title");
+    if (data) {
+      // Map through the 'data' array and create a new NavLink object for each 'href' value
+      const newNavLinks: NavLink[] = data.map((item) => ({
+        href: item.href,
+        title: item.title,
+        text: "Link text here", // Replace this with the desired link text
+      }));
+      // Update the 'navLinks' state variable with the new array of NavLink objects
+      setNavLinks(newNavLinks);
+    }
+  };
 
   const router = usePathname();
   useEffect(() => {
@@ -62,7 +91,9 @@ const Navbar: FC<NavbarProps> = ({ toggleAuth }) => {
   const routeMap: { [key: string]: string } = {
     "/": "/",
   };
-
+  useEffect(() => {
+    getProfile();
+  }, []);
   let file = routeMap[router];
   return (
     <nav
@@ -97,39 +128,15 @@ const Navbar: FC<NavbarProps> = ({ toggleAuth }) => {
       {windowWidth >= 1280 ? (
         <>
           <ul className="xl:flex text-small gap-7">
-            {NavLinks.slice(0, 2).map((link) => (
-              <Link href={link.href} key={link.key}>
-                <li>{link.text}</li>
-              </Link>
-            ))}
-          </ul>
-          <div className="transform relative left-[-10%] ">
-            <Transition
-              show={isMenuOpen}
-              enter="transition duration-200 ease-out"
-              enterFrom="transform -translate-y-full opacity-0"
-              enterTo="transform translate-y-0 opacity-100"
-              leave="transition duration-200 ease-in"
-              leaveFrom="transform translate-y-0 opacity-100"
-              leaveTo="transform -translate-y-full opacity-0"
-            >
-              <ul className="flex flex-col   my-4 bg-[#0c1607] text-black w-96 fixed top-0 left-0 p-4 transform">
-                {NavLinks.slice(2).map((link) => (
-                  <Link href={link.href} key={link.key}>
-                    <li className="text-white text-[14px]	py-4">{link.text}</li>
+            {navLinks.map(
+              (link, index) =>
+                index < 4 && (
+                  <Link href={link.href} key={link.href}>
+                    <li className="xl:flex text-small gap-7">{link.title}</li>
                   </Link>
-                ))}
-              </ul>
-            </Transition>
-          </div>
-          {NavLinks.length > 4 && (
-            <button
-              className="text-[12px]"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? "Pokaži manj" : "Pokaži več"}
-            </button>
-          )}
+                )
+            )}
+          </ul>
         </>
       ) : (
         <>
@@ -155,9 +162,9 @@ const Navbar: FC<NavbarProps> = ({ toggleAuth }) => {
               leaveTo="transform -translate-y-full opacity-0"
             >
               <ul className="flex flex-col z-10  bg-[#0c1607] text-black  fixed top-0 left-0 p-4 transform ">
-                {NavLinks.map((link) => (
-                  <Link href={link.href} key={link.key}>
-                    <li className="py-2 text-white ">{link.text}</li>
+                {navLinks.map((link, index) => (
+                  <Link href={link.href} key={link.href}>
+                    <li className="py-2 text-white ">{link.title}</li>
                   </Link>
                 ))}
               </ul>

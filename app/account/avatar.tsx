@@ -20,7 +20,7 @@ export default function Avatar({
   const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
-    async function downloadImage(path: string) {
+    async function downloadAvatar(path: string) {
       try {
         const { data, error } = await supabase.storage
           .from("avatars")
@@ -36,7 +36,7 @@ export default function Avatar({
       }
     }
 
-    if (url) downloadImage(url);
+    if (url) downloadAvatar(url);
   }, [url, supabase]);
 
   const uploadAvatar: React.ChangeEventHandler<HTMLInputElement> = async (
@@ -77,7 +77,7 @@ export default function Avatar({
           height={size}
           src={avatarUrl}
           className="avatar image"
-          style={{ height: 450, width: 450 }}
+          style={{ height: 500, width: 500 }}
         />
       ) : (
         <div

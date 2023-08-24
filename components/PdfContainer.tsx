@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, ChangeEvent } from "react";
-
+import { UpdatePagesParams } from "@/app/[id]/page";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import supabase from "@/utils/supabase";
@@ -11,11 +11,14 @@ type loadData = {
   id: string;
   updated_at: string;
 };
-function PdfContainer() {
+
+interface PdfContainerProps {
+  page: UpdatePagesParams | null;
+}
+const PdfContainer: React.FC<PdfContainerProps> = ({ page }) => {
   const [message, setMessage] = useState("");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [loadData, setLoadData] = useState<loadData[] | null>(null);
-
   // use effect hook part _____________________________________________________________
   useEffect(() => {
     const loadStorage = async () => {
@@ -38,9 +41,8 @@ function PdfContainer() {
     }
   }
 
-  let link = `https://xjdkqmvgsfixvpbzprye.supabase.co/storage/v1/object/public/pdf/PdfFiles/${firstPdfName}`;
+  let link = `https://aotcwfclzyedcrdrjmra.supabase.co/storage/v1/object/public/avatars/${page?.avatar}`;
   console.log(link);
-
   // Storage and upload part of the code_______________________________________________________________________________
 
   const loadStorage = async () => {
@@ -144,29 +146,7 @@ function PdfContainer() {
         <div className="relative  z-[2] ">
           <nav className="w-[100%] paddingNav  "></nav>
           <div className="w-full overflow-scroll flex justify-center ">
-            <div className=" text-center flex items-center justify-center ">
-              <input
-                type="file"
-                accept="pdf/*" //format on save
-                className="block w-auto text-sm"
-                id="file_input"
-                onChange={(e) => {
-                  handleUpload(e);
-                }}
-              />
-              <p>{message}</p>
-              {uploadedFile && localStorage.getItem("uploadedFile") && (
-                <div className="flex items-center ">
-                  <p>Uploaded file: {uploadedFile.name}</p>
-                  <button
-                    className="m-5 text-red-500 p-2 ring-2 ring-red-500/[.20]"
-                    onClick={handleRemove}
-                  >
-                    Remove
-                  </button>
-                </div>
-              )}
-            </div>
+            <iframe src={link} width={600} height={600} />
           </div>
           <div className=" text-center flex justify-center items-center m-4  ">
             <iframe width={600} height={600} />
@@ -175,6 +155,6 @@ function PdfContainer() {
       </div>
     </div>
   );
-}
+};
 
 export default PdfContainer;

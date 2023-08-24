@@ -20,6 +20,7 @@ function Info_j_z() {
           toggleAuth={function (): void {
             throw new Error("Function not implemented.");
           }}
+          session={null}
         />
       ) : null}
 
