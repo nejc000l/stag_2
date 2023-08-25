@@ -22,6 +22,7 @@ interface NavbarProps {
 interface NavLink {
   href: any;
   title: any;
+  id: any;
 }
 /**
  * TODO I have to fix the button for the menu and place it inside the div and make it relative
@@ -37,10 +38,12 @@ const Navbar: FC<NavbarProps> = ({ toggleAuth, session }) => {
   const getProfile = async () => {
     let { data, error, status } = await supabase
       .from("pages")
-      .select("href,title");
+      .select("id, href, title");
+
     if (data) {
       // Map through the 'data' array and create a new NavLink object for each 'href' value
       const newNavLinks: NavLink[] = data.map((item) => ({
+        id: item.id,
         href: item.href,
         title: item.title,
         text: "Link text here", // Replace this with the desired link text
@@ -94,6 +97,7 @@ const Navbar: FC<NavbarProps> = ({ toggleAuth, session }) => {
   useEffect(() => {
     getProfile();
   }, []);
+
   let file = routeMap[router];
   return (
     <nav
@@ -127,15 +131,14 @@ const Navbar: FC<NavbarProps> = ({ toggleAuth, session }) => {
 
       {windowWidth >= 1280 ? (
         <>
+          <Link href="/">Domov</Link>
+
           <ul className="xl:flex text-small gap-7">
-            {navLinks.map(
-              (link, index) =>
-                index < 4 && (
-                  <Link href={link.href} key={link.href}>
-                    <li className="xl:flex text-small gap-7">{link.title}</li>
-                  </Link>
-                )
-            )}
+            {navLinks.map((link, index) => (
+              <Link href={link.href} key={link.id}>
+                <li className="py-2 text-white ">{link.title}</li>
+              </Link>
+            ))}
           </ul>
         </>
       ) : (
@@ -150,9 +153,9 @@ const Navbar: FC<NavbarProps> = ({ toggleAuth, session }) => {
               <CgMenuGridO width={"50px"} height={"50px"} />
             )}
           </button>
-          <div>
+          <div className="">
             <Transition
-              className="w-96 "
+              className="relative w-[100%] left-[-150px]  top-[20px] "
               show={isMenuOpen}
               enter="transition duration-200 ease-out "
               enterFrom="transform -translate-y-full opacity-0"
@@ -162,8 +165,8 @@ const Navbar: FC<NavbarProps> = ({ toggleAuth, session }) => {
               leaveTo="transform -translate-y-full opacity-0"
             >
               <ul className="flex flex-col z-10  bg-[#0c1607] text-black  fixed top-0 left-0 p-4 transform ">
-                {navLinks.map((link, index) => (
-                  <Link href={link.href} key={link.href}>
+                {navLinks.map((link) => (
+                  <Link href={link.href} key={link.id}>
                     <li className="py-2 text-white ">{link.title}</li>
                   </Link>
                 ))}
