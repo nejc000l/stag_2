@@ -12,6 +12,7 @@ export interface Database {
       pages: {
         Row: {
           avatar: string | null
+          created_at: string | null
           href: string | null
           id: string
           profile_id: string
@@ -20,6 +21,7 @@ export interface Database {
         }
         Insert: {
           avatar?: string | null
+          created_at?: string | null
           href?: string | null
           id?: string
           profile_id: string
@@ -28,6 +30,7 @@ export interface Database {
         }
         Update: {
           avatar?: string | null
+          created_at?: string | null
           href?: string | null
           id?: string
           profile_id?: string

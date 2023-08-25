@@ -42,13 +42,12 @@
   padding: 0;
   box-sizing: border-box;
 }
-header{
+header {
   animation: slideIn 2s ease 1;
   animation-delay: 0s;
 }
 body {
   font-family: Inter;
-
 }
 
 .flexCenter {
@@ -80,8 +79,6 @@ body {
   background: #888;
   border-radius: 12px;
 }
- 
-
 
 .modal-head-text {
   @apply md:text-5xl text-3xl font-extrabold text-left max-w-5xl w-full;
@@ -167,18 +164,17 @@ body {
   @apply flex justify-start items-center flex-col absolute h-[95%] w-full bottom-0 bg-white rounded-t-3xl lg:px-40 px-8 pt-14 pb-72 overflow-auto;
 }
 /*padding nav*/
-.paddingNav{
-    @apply py-[10px] px-0 ;
-  }
+.paddingNav {
+  @apply py-[10px] px-0;
+}
 /* Navbar */
 .navbar {
-  @apply py-5 px-8  border-nav-border gap-4 bg-[#0c1607] ;
+  @apply py-5 px-8  border-nav-border gap-4 bg-[#0c1607];
 }
 /*add transpercy */
 
-
-.backgroundOverlay2{
-  @apply absolute w-full ;
+.backgroundOverlay2 {
+  @apply absolute w-full;
 }
 
 .backgroundOverlay2::before {
@@ -191,16 +187,15 @@ body {
 .backgroundOverlay2::after {
   content: "";
   @apply absolute inset-0 bg-cover bg-center -z-10;
-  
 }
 
 /* add the scrollbar css */
-.bg-transparent{
-  @apply py-5 px-8  border-nav-border gap-4 transition ease-in-out delay-200 	;
+.bg-transparent {
+  @apply py-5 px-8  border-nav-border gap-4 transition ease-in-out delay-200;
 }
 /* add the overaly on side */
 .backgroundOverlay {
-  @apply absolute z-[-50]  min-h-full  ;
+  @apply absolute z-[-50]     h-[100%];
 }
 
 .backgroundOverlay::before {
@@ -217,8 +212,8 @@ body {
 }
 /* background image */
 .backgroundImage {
-@apply relative   inset-0 bg-cover bg-center;
-background-image: url('/images/stag3.jpg');
+  @apply relative   inset-0 bg-cover bg-center;
+  background-image: url("/images/stag3.jpg");
 }
 .backgroundImage::before {
   content: "";

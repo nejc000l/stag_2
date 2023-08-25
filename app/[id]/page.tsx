@@ -16,6 +16,7 @@ import {
   Session,
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
+import Link from "next/link";
 export type Props = {
   params: { id: string };
 };
@@ -25,6 +26,7 @@ export interface UpdatePagesParams {
   href: string | null;
   text: any;
   avatar: any;
+  created_at: any | null;
 }
 
 export default function Page({ params }: Props) {
@@ -35,20 +37,12 @@ export default function Page({ params }: Props) {
   const [showRest, setShowRest] = useState(false);
   const [data, setData] = useState<any[] | null>(null);
 
-  let firstSentence, secondSentence, thirdSentence, fourthSentence;
-
-  if (page) {
-    [firstSentence, secondSentence, thirdSentence, fourthSentence] = page.text
-      .split(".")
-      .slice(0, 4);
-  }
-
   useEffect(() => {
     async function fetchPage() {
       const { data, error } = await supabase
         .from("pages")
         .select("*")
-        .eq("href, title, text, avatar", params.id)
+        .eq("href, title, text, avatar,created_at", params.id)
         .single();
       if (error) {
         console.error(error);
@@ -99,47 +93,20 @@ export default function Page({ params }: Props) {
                     <div>{page.title}</div>
                   </h1>
                   <h4 className="text-[9px] md:text-[16px] m-[10px] flex-wrap break-normal text-justify">
-                    <div>
-                      {page && (
-                        <div>
-                          {firstSentence}.{secondSentence}.{thirdSentence}.
-                          {fourthSentence}.
-                          {showRest &&
-                            page &&
-                            page.text.slice(
-                              firstSentence.length + secondSentence?.length + 4
-                            )}
-                        </div>
-                      )}
-                      <span
-                        onClick={() => setShowRest(!showRest)}
-                        className="text-[#3f8629d3] font-bold cursor-pointer"
-                      >
-                        {showRest ? (
-                          <span className="text-[9px] md:text-lg">
-                            Pokaži manj
-                          </span>
-                        ) : (
-                          <span className="text-[9px] md:text-lg">
-                            {" "}
-                            Pokaži več
-                          </span>
-                        )}
-                      </span>
-                    </div>
+                    {page.text}
                   </h4>
-                  <div className=" relative flex text-center justify-center flex-col ">
-                    <Harmonica />
+                  <div className="relative flex text-center justify-center flex-col">
+                    {page.title === "Afriška prašičja kuga(APK)" && (
+                      <Harmonica />
+                    )}
                   </div>
 
                   <span className="pt-4 text-[9px] md:text-[12px] font-light">
                     Objavljeno:{" "}
-                    {data && (
+                    {page && (
                       <>
-                        {format(
-                          new Date(data[1].created_at),
-                          "  kk:mm dd/M/yyy"
-                        )}
+                        {" "}
+                        {format(new Date(page.created_at), " kk:mm dd/M/yyy")}
                       </>
                     )}
                   </span>

@@ -24,7 +24,7 @@ export const NavLinks = [
     shouldUnderline: true,
   },
   {
-    href: "/novice",
+    href: "/novi",
     key: "Novice",
     text: "Novice",
     shouldUnderline: true,
@@ -32,8 +32,8 @@ export const NavLinks = [
   {
     href: "/",
     key: "Kontakt",
-    email: ' ld.pugled@gmail.com',    
+    email: " ld.pugled@gmail.com",
     text: "",
-    vodja:'Starešina: Grčar Borja-Miki'
-  }
+    vodja: "Starešina: Grčar Borja-Miki",
+  },
 ];
