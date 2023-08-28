@@ -3,7 +3,7 @@ import { Database } from "@/types/supabase";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-type NavLink = {
+export type NavLink = {
   href: any;
   title: any;
   id: any;
@@ -19,14 +19,11 @@ function LinksMainPage() {
       .select("id, href, title");
 
     if (data) {
-      // Map through the 'data' array and create a new NavLink object for each 'href' value
       const newNavLinks: NavLink[] = data.map((item) => ({
         id: item.id,
         href: item.href,
         title: item.title,
-        text: "Link text here", // Replace this with the desired link text
       }));
-      // Update the 'navLinks' state variable with the new array of NavLink objects
       setNavLinks(newNavLinks);
     }
   };

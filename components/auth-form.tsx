@@ -48,8 +48,8 @@ export default function AuthForm() {
   };
 
   return (
-    <div>
-      <div className="flex relative z-4 text-[#2b671cd8] justify-center items-center flex-col">
+    <div className="">
+      <div className=" h-[100vh] flex relative z-4 text-[#2b671cd8] justify-center items-center flex-col">
         <input
           name="email"
           onChange={(e) => setEmail(e.target.value)}

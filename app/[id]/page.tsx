@@ -22,10 +22,10 @@ export type Props = {
 };
 
 export interface UpdatePagesParams {
-  title: any;
+  title: string | null;
   href: string | null;
-  text: any;
-  avatar: any;
+  text: string | null;
+  avatar: any | null;
   created_at: any | null;
 }
 
@@ -35,7 +35,7 @@ export default function Page({ params }: Props) {
   const [showBackgroundOverlay, setShowBackgroundOverlay] = useState(true);
   const [isOpen, setIsOpen] = useState(true);
   const [showRest, setShowRest] = useState(false);
-  const [data, setData] = useState<any[] | null>(null);
+  const [data, setData] = useState<UpdatePagesParams>();
 
   useEffect(() => {
     async function fetchPage() {

@@ -53,15 +53,29 @@ export default function Avatar({
       const fileExt = file.name.split(".").pop();
       const filePath = `${uid}-${Math.random()}.${fileExt}`;
 
-      let { error: uploadError } = await supabase.storage
+      // Check if the file already exists in the storage bucket
+      let { data: existingFile, error: listError } = await supabase.storage
         .from("avatars")
-        .upload(filePath, file);
-
-      if (uploadError) {
-        throw uploadError;
+        .list(filePath);
+      if (listError) {
+        throw listError;
       }
 
-      onUpload(filePath);
+      // If the file already exists, use its name
+      if (existingFile && existingFile.length > 0) {
+        onUpload(existingFile[0].name);
+      } else {
+        // If the file does not exist, upload it and call the onUpload function with the generated file path
+        let { error: uploadError } = await supabase.storage
+          .from("avatars")
+          .upload(filePath, file);
+
+        if (uploadError) {
+          throw uploadError;
+        }
+
+        onUpload(filePath);
+      }
     } catch (error) {
       alert("Error uploading avatar!");
     } finally {

@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar toggleAuth={toggleAuth} />
+      <Navbar toggleAuth={toggleAuth} session={null} />
       <PageWrapper>
         <section className="min-h-screen">
           {show && (

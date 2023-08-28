@@ -11,23 +11,25 @@ import {
 import Navbar from "@/components/Navbar";
 import Avatar from "./avatar";
 import { url } from "inspector";
+
 interface UpdatePagesParams {
-  title: any | null;
+  title: string | null;
   href: string | null;
-  text: any | null;
+  text: string | null;
   avatar: any | null;
-  created_at: any | null;
+  created_at?: any | null;
 }
 export default function AccountForm({ session }: { session: Session | null }) {
   const supabase = createClientComponentClient<Database>();
   const [loading, setLoading] = useState(true);
-  const [messg, setMessg] = useState("");
+  const [messg, setMessg] = useState("there was an error while deleting");
   const [title, setTitle] = useState<any | null>(null);
   const [text, setText] = useState<any | null>(null);
   const [avatar, setAvatar] = useState<any | null>(null);
   const [href, setHref] = useState<any | null>("");
   const user = session?.user;
-  const [allData, setAllData] = useState<any | null>();
+  const [allData, setAllData] = useState<any[] | null>([]);
+  // const [time, setTime] = useState<any | null>(null);
 
   const getProfile = useCallback(async () => {
     try {
@@ -49,11 +51,13 @@ export default function AccountForm({ session }: { session: Session | null }) {
         setHref(data.href);
         setText(data.text);
         setAvatar(data.avatar);
+        // setTime(data.created_at);
       } else {
         setTitle(null);
         setHref(null);
         setText(null);
         setAvatar(null);
+        // setTime(null);
       }
     } catch (error) {
       alert("Error loading user data!");
@@ -66,7 +70,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
     async function fetchProfile() {
       const { data, error } = await supabase
         .from("pages")
-        .select(`title, href, text, avatar, created_at`) // <-- Add "created_at" here
+        .select(`title, href, text, avatar, created_at,id`) // <-- Add "created_at" here
         .eq("profile_id", user?.id)
         .order("id", { ascending: false });
 
@@ -138,24 +142,24 @@ export default function AccountForm({ session }: { session: Session | null }) {
     };
     showToastMessage();
   };
+  // --------- CREATE PAGE  -----------------
 
-  async function createPages({ title, text, href, avatar }: UpdatePagesParams) {
+  async function createPages({
+    title,
+    text,
+    href,
+    avatar,
+    created_at,
+  }: UpdatePagesParams) {
     try {
       setLoading(true);
       if (user) {
-        // console.log("Inserting data:", {
-        //   title,
-        //   text,
-        //   href,
-        //   avatar,
-        //   profile_id: user.id,
-        // });
         let { data, error } = await supabase.from("pages").insert({
           title,
           text,
           href,
           avatar,
-
+          created_at,
           profile_id: user.id,
         });
         if (error) {
@@ -166,7 +170,6 @@ export default function AccountForm({ session }: { session: Session | null }) {
       setLoading(false);
     }
     // ...
-
     const showToastMessage = () => {
       toast.success("Page Created!", {
         position: "top-center",
@@ -181,6 +184,31 @@ export default function AccountForm({ session }: { session: Session | null }) {
     };
     showToastMessage();
   }
+  // --------- DELETE PAGES  -----------------
+  async function deletePages({ title, avatar, text, href }: UpdatePagesParams) {
+    try {
+      let { data, error } = await supabase
+        .from("pages")
+        .delete()
+        .or(
+          `title.eq.${title},avatar.eq.${avatar},text.eq.${text},href.eq.${href}`
+        );
+      if (error) {
+        throw error;
+      }
+
+      let { error: removeError } = await supabase.storage
+        .from("avatars")
+        .remove([avatar]);
+      if (removeError) {
+        throw removeError;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // ...
 
   return (
     <>
@@ -192,11 +220,11 @@ export default function AccountForm({ session }: { session: Session | null }) {
           session={null}
         />
       </div>
-
-      <div className=" pt-[6rem] flex flex-col z-4 relative items-center justify-center h-screen text-[#2b671cd8] gap-4">
-        <div className="h-full overflow-y-scroll">
-          <div className="w-full flex items-center justify-center">
-            {user && (
+      {user && (
+        <div className=" backgroundOverlay2 w-full pt-[6rem] flex flex-row z-4 relative items-center justify-center h-screen text-[#2b671cd8] gap-4">
+          {/* ------------------------------------------------- */}
+          <div className="h-full overflow-y-scroll w-[70%]">
+            <div className="w-full flex items-center justify-center">
               <div>
                 <label className="m-4" htmlFor="username">
                   title: {title}
@@ -210,10 +238,8 @@ export default function AccountForm({ session }: { session: Session | null }) {
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
-            )}
-          </div>
-          <div className="justify-center items-center  flex w-full">
-            {user && (
+            </div>
+            <div className="justify-center items-center  flex w-full">
               <div>
                 <div className="flex justify-center">
                   <Avatar
@@ -226,11 +252,9 @@ export default function AccountForm({ session }: { session: Session | null }) {
                   />
                 </div>
               </div>
-            )}
-          </div>
-          <div className="w-full items-center flex justify-center ">
-            {user && (
-              <div className="flex justify-center ">
+            </div>
+            <div className="w-full items-center flex justify-center ">
+              <div className="flex justify-center flex-col">
                 <label className="m-4" htmlFor="username">
                   {`${location.origin ? location.origin : ""}/${
                     href === null ? "" : href.slice(0, 20)
@@ -245,77 +269,99 @@ export default function AccountForm({ session }: { session: Session | null }) {
                   value={href === null ? "" : href}
                   onChange={(e) => setHref(e.target.value)}
                   maxLength={20}
-                  placeholder="URL vsebovati mora _med presledki"
+                  placeholder="med presledki _ primer(a_p_k)"
                 ></input>
+                <span className="text-[12px] text-white">
+                  URL koncnica naj bo kratka vsobovati mora maximalno 20 črk{" "}
+                </span>
               </div>
-            )}
-          </div>
-          <div className="w-ful flex overflow-hidden h-auto">
-            {user && (
-              <div className="overflow-y-scroll	">
-                <h4 className="m-4 w-[20rem] break-words">{text}</h4>
+            </div>
+
+            <div className=" w-[100%] flex overflow-hidden h-auto">
+              <div className="overflow-y-scroll p-[10%] w-[100%]">
                 <textarea
-                  className="w-[20rem] h-[10rem] p-[10px] overflow-wrap: break-word; word-break: break-all;"
+                  className="w-[100%] h-[10rem] p-[2%] overflow-wrap: break-word; word-break: break-all;"
                   onChange={(e) => setText(e.target.value)}
                   value={text === null ? "" : text}
                   maxLength={6000}
                 />
               </div>
-            )}
-          </div>
-          <div className="text-white">
-            <button
-              onClick={() =>
-                updatePageF({
-                  title: title,
-                  href: href,
-                  text: text,
-                  avatar: avatar,
-                  created_at: new Date(),
-                })
-              }
-            >
-              Update
-            </button>
-
-            <ToastContainer
-              className="toaster-container"
-              position="top-center"
-              autoClose={111111100}
-              hideProgressBar={true}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="dark"
-            />
-          </div>
-          <div className="text-white">
-            <button
-              onClick={() =>
-                createPages({
-                  title,
-                  text,
-                  href,
-                  avatar,
-                  created_at: new Date(),
-                })
-              }
-            >
-              Create Page,
-            </button>
-          </div>
-          <div className="text-white">
-            <form action="/auth/singout" method="post">
-              <button className="button block" type="submit">
-                Sign out
+            </div>
+            <div className="text-white flex justify-center flex-col items-center ">
+              <button
+                onClick={() =>
+                  updatePageF({
+                    title: title,
+                    href: href,
+                    text: text,
+                    avatar: avatar,
+                    created_at: new Date(),
+                  })
+                }
+              >
+                Update
               </button>
-            </form>
+
+              <ToastContainer
+                className="toaster-container"
+                position="top-center"
+                autoClose={111111100}
+                hideProgressBar={true}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+              />
+
+              <button
+                onClick={() =>
+                  createPages({
+                    title,
+                    text,
+                    href,
+                    avatar,
+                    created_at: new Date(),
+                  })
+                }
+              >
+                Create Page,
+              </button>
+              <div>
+                <form action="/auth/singout" method="post">
+                  <button className="button block" type="submit">
+                    Sign out
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+          {/* ------------------------------------------------- */}
+          <div className="w-[10rem] h-full items-center justify-center border-l   border-white">
+            <button className="text-white text-sm  w-auto pt-24">
+              {allData?.map((item, index) => (
+                <div
+                  className="p-4"
+                  key={item.id}
+                  onClick={() => {
+                    setTitle(item.title);
+                    setHref(item.href);
+                    setText(item.text);
+                    setAvatar(item.avatar);
+                  }}
+                >
+                  <h2>{item.title}</h2>
+                </div>
+              ))}
+            </button>
+            <button onClick={() => deletePages({ title, avatar, text, href })}>
+              Delete
+            </button>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
