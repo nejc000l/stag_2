@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { PageWrapper } from "../pageWrapper";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import PdfContainer from "@/components/PdfContainer";
 import { Disclosure, Transition } from "@headlessui/react";
 import { BsFileEarmarkPdf } from "react-icons/bs";
@@ -77,7 +76,7 @@ export default function Page({ params }: Props) {
                   showBackgroundOverlay ? "backgroundOverlay" : ""
                 }`}
               >
-                <div className="flex  justify-start py-4 h-ful flex-col  mr-[10%] ml-[10%]  md:mr-[15%] md:ml-[15%] ">
+                <div className="flex  justify-start py-4 h-ful flex-col  pr-[10%] pl-[10%]  md:pr-[15%] md:pl-[15%] ">
                   {isOpen === true ? (
                     <div>
                       <BsFileEarmarkPdf
@@ -100,7 +99,6 @@ export default function Page({ params }: Props) {
                       <Harmonica />
                     )}
                   </div>
-
                   <span className="pt-4 text-[9px] md:text-[12px] font-light">
                     Objavljeno:{" "}
                     {page && (
@@ -130,7 +128,6 @@ export default function Page({ params }: Props) {
                 <PdfContainer page={page} />
               </motion.div>
             </section>
-            <Footer />
           </PageWrapper>
         </>
       ) : (

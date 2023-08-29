@@ -11,7 +11,7 @@ import {
 import Navbar from "@/components/Navbar";
 import Avatar from "./avatar";
 import { url } from "inspector";
-
+const revalidate = 0;
 interface UpdatePagesParams {
   title: string | null;
   href: string | null;
@@ -87,6 +87,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
 
   useEffect(() => {
     getProfile();
+    revalidate;
   }, [user, getProfile]);
 
   async function updatePages({
@@ -206,6 +207,19 @@ export default function AccountForm({ session }: { session: Session | null }) {
     } catch (error) {
       console.error(error);
     }
+    const showToastMessage = () => {
+      toast.success("Page Deleted", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    };
+    showToastMessage();
   }
 
   // ...
@@ -221,16 +235,16 @@ export default function AccountForm({ session }: { session: Session | null }) {
         />
       </div>
       {user && (
-        <div className=" backgroundOverlay2 w-full pt-[6rem] flex flex-row z-4 relative items-center justify-center h-screen text-[#2b671cd8] gap-4">
+        <div className=" backgroundOverlay2 w-full pt-[6rem] flex flex-row z-4 relative items-center justify-center h-screen font-bold  text-[#315a26d8] gap-4">
           {/* ------------------------------------------------- */}
           <div className="h-full overflow-y-scroll w-[70%]">
             <div className="w-full flex items-center justify-center">
-              <div>
-                <label className="m-4" htmlFor="username">
-                  title: {title}
+              <div className="flex flex-col mb-4">
+                <label className="mb-4 " htmlFor="username">
+                  Naslov zavihka: {title}
                 </label>
                 <input
-                  className="p-2"
+                  className="p-2 w-[500px]"
                   type="text"
                   name="fullName"
                   id="fullName"
@@ -240,8 +254,8 @@ export default function AccountForm({ session }: { session: Session | null }) {
               </div>
             </div>
             <div className="justify-center items-center  flex w-full">
-              <div>
-                <div className="flex justify-center">
+              <div className="">
+                <div className="flex justify-center items-center">
                   <Avatar
                     uid={user.id}
                     url={avatar}
@@ -255,14 +269,14 @@ export default function AccountForm({ session }: { session: Session | null }) {
             </div>
             <div className="w-full items-center flex justify-center ">
               <div className="flex justify-center flex-col">
-                <label className="m-4" htmlFor="username">
+                <label className="mb-[5px] pb-[10px] " htmlFor="username">
                   {`${location.origin ? location.origin : ""}/${
                     href === null ? "" : href.slice(0, 20)
                   }`}
                 </label>
 
                 <input
-                  className="p-2 w-96"
+                  className="p-2 w-[500px]"
                   type="text"
                   name="href"
                   id="href"
@@ -272,22 +286,24 @@ export default function AccountForm({ session }: { session: Session | null }) {
                   placeholder="med presledki _ primer(a_p_k)"
                 ></input>
                 <span className="text-[12px] text-white">
-                  URL koncnica naj bo kratka vsobovati mora maximalno 20 črk{" "}
+                  URL končnica naj bo kratka vsobovati mora maximalno 20 črk
+                  <br />
+                  in ne sme vsebovati (ć,ž,š...)
                 </span>
               </div>
             </div>
 
-            <div className=" w-[100%] flex overflow-hidden h-auto">
-              <div className="overflow-y-scroll p-[10%] w-[100%]">
+            <div className=" w-[100%] flex justify-center overflow-hidden h-auto">
+              <div className="overflow-y-scroll pt-[4rem] w-[500px]">
                 <textarea
-                  className="w-[100%] h-[10rem] p-[2%] overflow-wrap: break-word; word-break: break-all;"
+                  className=" h-[10rem] w-[500px] p-[2%] overflow-wrap: break-word; word-break: break-all;"
                   onChange={(e) => setText(e.target.value)}
                   value={text === null ? "" : text}
                   maxLength={6000}
                 />
               </div>
             </div>
-            <div className="text-white flex justify-center flex-col items-center ">
+            <div className="text-white flex justify-center flex-col items-center pt-[1rem] pb-[1rem] ">
               <button
                 onClick={() =>
                   updatePageF({
@@ -339,11 +355,11 @@ export default function AccountForm({ session }: { session: Session | null }) {
             </div>
           </div>
           {/* ------------------------------------------------- */}
-          <div className="w-[10rem] h-full items-center justify-center border-l   border-white">
-            <button className="text-white text-sm  w-auto pt-24">
+          <div className="w-auto h-full items-center  border-l  flex flex-col  border-white">
+            <button className="text-white text-sm  w-auto text-justify	">
               {allData?.map((item, index) => (
                 <div
-                  className="p-4"
+                  className="p-4 hover:underline"
                   key={item.id}
                   onClick={() => {
                     setTitle(item.title);

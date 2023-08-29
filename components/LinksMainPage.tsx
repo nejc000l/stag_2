@@ -33,7 +33,7 @@ function LinksMainPage() {
 
   return (
     <>
-      <ul className="relative text-center  text-white flex flex-col font-light ">
+      <ul className="relative text-center font-bold  text-white flex flex-col  ">
         {navLinks.map((link: NavLink) => {
           const linkClass = link.shouldUnderline
             ? " py-4 hover:underline"

@@ -195,7 +195,7 @@ body {
 }
 /* add the overaly on side */
 .backgroundOverlay {
-  @apply absolute z-[-50]     h-[70%];
+  @apply absolute z-[-50]     h-[100%];
 }
 
 .backgroundOverlay::before {

@@ -1,7 +1,6 @@
 "use client";
 import Navbar from "@/components/Navbar";
 import { PageWrapper } from "./pageWrapper";
-import Footer from "@/components/Footer";
 import TitleNavigation from "@/components/TitleNavigation";
 import AuthForm from "@/components/auth-form";
 import { motion } from "framer-motion";
@@ -41,8 +40,6 @@ export default function Home() {
         >
           {!show && <TitleNavigation />}
         </div>
-
-        <Footer />
       </PageWrapper>
     </>
   );

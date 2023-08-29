@@ -84,7 +84,7 @@ export default function Avatar({
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center mb-4 ">
       {avatarUrl ? (
         <iframe
           width={size}
@@ -106,6 +106,7 @@ export default function Avatar({
           display: "flex",
           justifyContent: "center",
           cursor: "pointer",
+          paddingTop: "10px",
         }}
       >
         <label className="button primary block cursor-pointer" htmlFor="single">

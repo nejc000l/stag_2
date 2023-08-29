@@ -131,15 +131,58 @@ const Navbar: FC<NavbarProps> = ({ toggleAuth, session }) => {
 
       {windowWidth >= 1280 ? (
         <>
-          <Link href="/">Domov</Link>
-
-          <ul className="xl:flex text-small gap-7">
-            {navLinks.map((link, index) => (
-              <Link href={link.href} key={link.id}>
-                <li className="py-2 text-white ">{link.title}</li>
-              </Link>
-            ))}
+          <ul className="xl:flex text-small gap-4">
+            <Link className="text-white hover:underline font-bold" href="/">
+              <li className="py-2 text-white hover:underline font-bold">
+                Domov
+              </li>
+            </Link>
           </ul>
+
+          <>
+            <ul className="xl:flex text-small gap-4">
+              {navLinks.slice(0, 2).map((link) => (
+                <Link href={link.href} key={link.id}>
+                  <li className="py-2 text-white hover:underline font-bold">
+                    {link.title}
+                  </li>
+                </Link>
+              ))}
+            </ul>
+
+            <button
+              className=" text-[24px] "
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? (
+                <CgMenuGridO width={"50px"} height={"50px"} />
+              ) : (
+                <CgMenuGridO width={"50px"} height={"50px"} />
+              )}
+            </button>
+            <div className="">
+              <Transition
+                className="relative w-[100%] left-[-150px]  top-[20px] "
+                show={isMenuOpen}
+                enter="transition duration-200 ease-out "
+                enterFrom="transform -translate-y-full opacity-0"
+                enterTo="transform translate-y-0 opacity-100"
+                leave="transition duration-200 ease-in"
+                leaveFrom="transform translate-y-0 opacity-100 "
+                leaveTo="transform -translate-y-full opacity-0"
+              >
+                <ul className="flex flex-col z-10  bg-[#0c1607] text-black  fixed top-0 left-0 p-4 transform ">
+                  {navLinks.slice(2).map((link) => (
+                    <Link href={link.href} key={link.id}>
+                      <li className="py-2 text-white hover:underline">
+                        {link.title}
+                      </li>{" "}
+                    </Link>
+                  ))}
+                </ul>
+              </Transition>
+            </div>
+          </>
         </>
       ) : (
         <>
@@ -167,7 +210,9 @@ const Navbar: FC<NavbarProps> = ({ toggleAuth, session }) => {
               <ul className="flex flex-col z-10  bg-[#0c1607] text-black  fixed top-0 left-0 p-4 transform ">
                 {navLinks.map((link) => (
                   <Link href={link.href} key={link.id}>
-                    <li className="py-2 text-white ">{link.title}</li>
+                    <li className="py-2 text-white hover:underline">
+                      {link.title}
+                    </li>
                   </Link>
                 ))}
               </ul>
