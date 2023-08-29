@@ -1,108 +1,60 @@
-import { Disclosure, Transition } from "@headlessui/react";
-import React from "react";
+import { useState } from "react";
 
-export default function Harmonica() {
+interface AccordionItemProps {
+  title: string;
+  content: string;
+}
+
+const AccordionItem: React.FC<AccordionItemProps> = ({ title, content }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <>
-      <div className="w-full overflow-scroll flex md:flex-row flex-col justify-evenly h-[30vh]">
-        <div className=" ">
-          <Disclosure>
-            <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px]  md:text-lg ">
-              Leto 2017
-            </Disclosure.Button>
-            <Transition
-              enter="transition duration-100 ease-out"
-              enterFrom="transform scale-95 opacity-0"
-              enterTo="transform scale-100 opacity-100"
-              leave="transition duration-75 ease-out"
-              leaveFrom="transform scale-100 opacity-100"
-              leaveTo="transform scale-95 opacity-0"
-            >
-              <Disclosure.Panel>
-                <ul>
-                  <li className="p-4 text-justify text-[9px] flex-wrap md:text-[14px]">
-                    V letu 2017 je bilo v Evropi prijavljenih 4.002 pojavov APK
-                    pri divjih prašičih in 265 pojavov pri domačih prašičih.
-                  </li>
-                </ul>
-              </Disclosure.Panel>
-            </Transition>
-          </Disclosure>
-        </div>
+    <div className="border-b">
+      <button
+        className="flex justify-between items-center w-full p-4 focus:outline-none"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className="text-lg font-medium">{title}</span>
+        <span>{isOpen ? "-" : "+"}</span>
+      </button>
+      {isOpen && <div className="p-4">{content}</div>}
+    </div>
+  );
+};
 
-        <div className="">
-          <Disclosure>
-            <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px]  md:text-lg">
-              Leto 2018
-            </Disclosure.Button>
-            <Transition
-              enter="transition duration-100 ease-out"
-              enterFrom="transform scale-95 opacity-0"
-              enterTo="transform scale-100 opacity-100"
-              leave="transition duration-75 ease-out"
-              leaveFrom="transform scale-100 opacity-100"
-              leaveTo="transform scale-95 opacity-0"
-            >
-              <Disclosure.Panel>
-                <ul>
-                  <li className="p-4 text-justify text-[9px] flex-wrap md:text-[14px]">
-                    V letu 2018 je bilo v Evropi prijavljenih 5.429 pojavov APK
-                    pri divjih prašičih in 1.465 pojavov pri domačih prašičih.
-                  </li>
-                </ul>
-              </Disclosure.Panel>
-            </Transition>
-          </Disclosure>
-        </div>
-        <div className="  ">
-          <Disclosure>
-            <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px] md:text-lg ">
-              Leto 2019
-            </Disclosure.Button>
-            <Transition
-              enter="transition duration-100 ease-out"
-              enterFrom="transform scale-95 opacity-0"
-              enterTo="transform scale-100 opacity-100"
-              leave="transition duration-75 ease-out"
-              leaveFrom="transform scale-100 opacity-100"
-              leaveTo="transform scale-95 opacity-0"
-            >
-              <Disclosure.Panel>
-                <ul>
-                  <li className="p-4 text-justify text-[9px] flex-wrap md:text-[14px]">
-                    V letu 2019 je bilo v Evropi prijavljenih 6.456 pojavov APK
-                    pri divjih prašičih in 1.912 pojavov pri domačih prašičih.
-                  </li>
-                </ul>
-              </Disclosure.Panel>
-            </Transition>
-          </Disclosure>
-        </div>
-        <div className=" ">
-          <Disclosure>
-            <Disclosure.Button className="p-4 m-4 mainColorLight text-[12px] md:text-lg ">
-              Leto 2020
-            </Disclosure.Button>
-            <Transition
-              enter="transition duration-100 ease-out"
-              enterFrom="transform scale-95 opacity-0"
-              enterTo="transform scale-100 opacity-100"
-              leave="transition duration-75 ease-out"
-              leaveFrom="transform scale-100 opacity-100"
-              leaveTo="transform scale-95 opacity-0"
-            >
-              <Disclosure.Panel>
-                <ul>
-                  <li className="p-4 text-justify text-[9px] flex-wrap md:text-[14px]">
-                    V letu 2020 je bilo v Evropi prijavljenih 11.208 pojavov APK
-                    pri divjih prašičih in 1.247 pojavov pri domačih prašičih.
-                  </li>
-                </ul>
-              </Disclosure.Panel>
-            </Transition>
-          </Disclosure>
-        </div>
-      </div>
-    </>
+const data = [
+  {
+    title: "Leto 2017",
+    content:
+      "V letu 2017 je bilo v Evropi prijavljenih 4.002 pojavov APK pri divjih prašičih in 265 pojavov pri domačih prašičih.",
+  },
+  {
+    title: "Leto 2018",
+    content:
+      "V letu 2018 je bilo v Evropi prijavljenih 5.429 pojavov APK pri divjih prašičih in 1.465 pojavov pri domačih prašičih.",
+  },
+  {
+    title: "Leto 2019",
+    content:
+      "V letu 2019 je bilo v Evropi prijavljenih 6.456 pojavov APK pri divjih prašičih in 1.912 pojavov pri domačih prašičih.",
+  },
+  {
+    title: "Leto 2020",
+    content:
+      "V letu 2020 je bilo v Evropi prijavljenih 11.208 pojavov APK pri divjih prašičih in 1.247 pojavov pri domačih prašičih.",
+  },
+];
+
+export function Harmonica() {
+  return (
+    <div className="max-w-md w-full">
+      {data.map((item) => (
+        <AccordionItem
+          key={item.title}
+          title={item.title}
+          content={item.content}
+        />
+      ))}
+    </div>
   );
 }

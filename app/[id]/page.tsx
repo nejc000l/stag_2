@@ -7,7 +7,7 @@ import { Disclosure, Transition } from "@headlessui/react";
 import { BsFileEarmarkPdf } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
 import { motion } from "framer-motion";
-import Harmonica from "@/components/Harmonica";
+import { Harmonica } from "@/components/Harmonica";
 import { format } from "date-fns";
 
 import { Database } from "@/types/supabase";
@@ -76,7 +76,7 @@ export default function Page({ params }: Props) {
                   showBackgroundOverlay ? "backgroundOverlay" : ""
                 }`}
               >
-                <div className="flex  justify-start py-4 h-ful flex-col  pr-[10%] pl-[10%]  md:pr-[15%] md:pl-[15%] ">
+                <div className="flex  justify-start py-4 h-[60%] flex-col  pr-[10%] pl-[10%]  md:pr-[15%] md:pl-[15%] ">
                   {isOpen === true ? (
                     <div>
                       <BsFileEarmarkPdf
@@ -88,17 +88,20 @@ export default function Page({ params }: Props) {
                   ) : (
                     ""
                   )}
-                  <h1 className="py-4 font-bold text-2xl md:text-4xl">
-                    <div>{page.title}</div>
-                  </h1>
-                  <h4 className="text-[9px] md:text-[16px] m-[10px] flex-wrap break-normal text-justify">
-                    {page.text}
-                  </h4>
-                  <div className="relative flex text-center justify-center flex-col">
-                    {page.title === "Afriška prašičja kuga(APK)" && (
-                      <Harmonica />
-                    )}
+                  <div className="overflow-scroll relative h-full w-[100%]">
+                    <h1 className="py-4 font-bold text-2xl md:text-4xl">
+                      <div>{page.title}</div>
+                    </h1>
+                    <h4 className="text-[9px] md:text-[16px] m-[10px] flex-wrap break-normal text-justify">
+                      {page.text}
+                    </h4>
+                    <div className="absolute  items-center w-full bg-[#06120676] flex  text-center justify-center flex-col">
+                      {page.title === "Afriška prašičja kuga(APK)" && (
+                        <Harmonica />
+                      )}
+                    </div>
                   </div>
+
                   <span className="pt-4 text-[9px] md:text-[12px] font-light">
                     Objavljeno:{" "}
                     {page && (
