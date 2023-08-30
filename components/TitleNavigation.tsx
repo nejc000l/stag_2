@@ -3,7 +3,7 @@ import KontaktSpan from "./KontaktSpan";
 import LinksMainPage from "./LinksMainPage";
 function TitleNavigation() {
   return (
-    <div className="paddings h-auto absolute top-[20%]  left-0 right-0 ml-auto mr-auto flex items-center justify-center ">
+    <div className=" h-auto absolute top-[20%]  left-0 right-0 ml-auto mr-auto flex items-center justify-center ">
       <div className="flex flex-col items-center justify-center ">
         <div className="  font-semibold text-center md:top-24 ">
           <h6 className="md:text-4xl text-sm text-[#aa730e] font-bold">
