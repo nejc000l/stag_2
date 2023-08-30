@@ -22,7 +22,7 @@ export default function RootLayout({ children }: Props) {
     <html>
       <head />
       <body
-        className={`${poppins.className} backgroundImage text-white min-h-screen`}
+        className={`${poppins.className} backgroundImage text-white w-full min-h-screen`}
       >
         {children}
       </body>
