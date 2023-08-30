@@ -1,8 +1,8 @@
 import "./globals.css";
-import './TextLayer.css'
+import "./TextLayer.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-
+export const revalidate = 0;
 type Props = {
   children: any;
 };
