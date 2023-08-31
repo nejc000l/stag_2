@@ -253,9 +253,9 @@ export default function AccountForm({ session }: { session: Session | null }) {
                 />
               </div>
             </div>
-            <div className="justify-center items-center  flex w-full">
+            <div className="justify-center items-center   w-full">
               <div className="">
-                <div className="flex justify-center items-center">
+                <div className=" justify-center items-center">
                   <Avatar
                     uid={user.id}
                     url={avatar}
