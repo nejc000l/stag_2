@@ -237,7 +237,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
       {user && (
         <div className="text-[12px] md:text-lg backgroundOverlay2 md:flex flex-col w-full pt-[6rem] flex md:flex-row z-4 relative items-center justify-center h-screen font-bold  text-[#315a26d8] gap-4">
           {/* ------------------------------------------------- */}
-          <div className="h-full overflow-y-scroll ">
+          <div className="h-full overflow-y-scroll w-auto md:w-[50%]">
             <div className=" md:w-full flex items-center justify-center">
               <div className="flex w-[300px]  flex-col mb-4">
                 <label className="mb-4 " htmlFor="username">
@@ -293,10 +293,10 @@ export default function AccountForm({ session }: { session: Session | null }) {
               </div>
             </div>
 
-            <div className=" w-[100%]   flex justify-center overflow-hidden h-auto">
-              <div className="overflow-y-scroll pt-[4rem] w-[300px] ">
+            <div className="w-full  flex  justify-center overflow-hidden h-auto">
+              <div className="w-[300px]  flex justify-center flex-col">
                 <textarea
-                  className=" h-[10rem] w-[500px] p-[2%] overflow-wrap: break-word; word-break: break-all;"
+                  className=" h-[10rem] w-[500px]  p-[2%] overflow-wrap: break-word; word-break: break-all;"
                   onChange={(e) => setText(e.target.value)}
                   value={text === null ? "" : text}
                   maxLength={6000}
