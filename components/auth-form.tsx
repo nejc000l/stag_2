@@ -63,13 +63,13 @@ export default function AuthForm() {
           className="m-4 p-4"
         />
         <button className="m-4 p-4" onClick={handleSignUp}>
-          Sign up
+          Registracija
         </button>
         <button className=" m-4 p-4" onClick={handleSignIn}>
-          Sign in
+          Vpiši se
         </button>
         <button className="m-4 p-4" onClick={handleSignOut}>
-          Sign out
+          Izpiši se
         </button>
         <div>{message}</div>
       </div>
