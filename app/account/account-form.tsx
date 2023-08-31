@@ -229,22 +229,22 @@ export default function AccountForm({ session }: { session: Session | null }) {
       <div className="w-full h-full">
         <Navbar
           toggleAuth={function (): void {
-            throw new Error("Function not implemented.");
+            throw new Error();
           }}
           session={null}
         />
       </div>
       {user && (
-        <div className=" backgroundOverlay2 md:flex flex-col w-full pt-[6rem] flex md:flex-row z-4 relative items-center justify-center h-screen font-bold  text-[#315a26d8] gap-4">
+        <div className="text-[12px] md:text-lg backgroundOverlay2 md:flex flex-col w-full pt-[6rem] flex md:flex-row z-4 relative items-center justify-center h-screen font-bold  text-[#315a26d8] gap-4">
           {/* ------------------------------------------------- */}
           <div className="h-full overflow-y-scroll ">
-            <div className="w-auto md:w-full flex items-center justify-center">
-              <div className="flex flex-col mb-4">
+            <div className=" md:w-full flex items-center justify-center">
+              <div className="flex w-[300px]  flex-col mb-4">
                 <label className="mb-4 " htmlFor="username">
                   Naslov zavihka: {title}
                 </label>
                 <input
-                  className="p-2 w-[500px]"
+                  className="p-2 w-auto md:w-[500px]"
                   type="text"
                   name="fullName"
                   id="fullName"
@@ -268,7 +268,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
               </div>
             </div>
             <div className="w-full items-center flex justify-center ">
-              <div className="flex justify-center flex-col">
+              <div className="w-[300px]  flex justify-center flex-col">
                 <label className="mb-[5px] pb-[10px] " htmlFor="username">
                   {`${location.origin ? location.origin : ""}/${
                     href === null ? "" : href.slice(0, 20)
@@ -276,7 +276,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
                 </label>
 
                 <input
-                  className="p-2 w-[500px]"
+                  className="p-2 w-auto md:w-[500px]"
                   type="text"
                   name="href"
                   id="href"
@@ -293,8 +293,8 @@ export default function AccountForm({ session }: { session: Session | null }) {
               </div>
             </div>
 
-            <div className=" w-[100%] flex justify-center overflow-hidden h-auto">
-              <div className="overflow-y-scroll pt-[4rem] w-[500px]">
+            <div className=" w-[100%]   flex justify-center overflow-hidden h-auto">
+              <div className="overflow-y-scroll pt-[4rem] w-[300px] ">
                 <textarea
                   className=" h-[10rem] w-[500px] p-[2%] overflow-wrap: break-word; word-break: break-all;"
                   onChange={(e) => setText(e.target.value)}
