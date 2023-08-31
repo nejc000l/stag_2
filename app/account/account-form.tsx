@@ -235,10 +235,10 @@ export default function AccountForm({ session }: { session: Session | null }) {
         />
       </div>
       {user && (
-        <div className=" backgroundOverlay2 w-full pt-[6rem] flex flex-row z-4 relative items-center justify-center h-screen font-bold  text-[#315a26d8] gap-4">
+        <div className=" backgroundOverlay2 md:flex flex-col w-full pt-[6rem] flex md:flex-row z-4 relative items-center justify-center h-screen font-bold  text-[#315a26d8] gap-4">
           {/* ------------------------------------------------- */}
-          <div className="h-full overflow-y-scroll w-[70%]">
-            <div className="w-full flex items-center justify-center">
+          <div className="h-full overflow-y-scroll ">
+            <div className="w-auto md:w-full flex items-center justify-center">
               <div className="flex flex-col mb-4">
                 <label className="mb-4 " htmlFor="username">
                   Naslov zavihka: {title}
@@ -355,8 +355,8 @@ export default function AccountForm({ session }: { session: Session | null }) {
             </div>
           </div>
           {/* ------------------------------------------------- */}
-          <div className="w-auto h-full items-center  border-l  flex flex-col  border-white">
-            <button className="text-white text-sm  w-auto text-justify	">
+          <div className="h-full items-center  border-l p-[10%] md:p-[0] flex flex-col border-none md:border-white">
+            <button className="text-white text-sm  w-full md:w-auto text-justify	">
               {allData?.map((item, index) => (
                 <div
                   className="p-4 hover:underline"

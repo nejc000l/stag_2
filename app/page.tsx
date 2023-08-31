@@ -21,7 +21,7 @@ export default function Home() {
     <>
       <Navbar toggleAuth={toggleAuth} session={null} />
       <PageWrapper>
-        <section className="min-h-screen">
+        <section className="h-[100vh]">
           {show && (
             <motion.div
               initial="hidden"
