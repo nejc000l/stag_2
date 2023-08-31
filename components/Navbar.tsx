@@ -209,10 +209,7 @@ const Navbar: FC<NavbarProps> = ({ toggleAuth, session }) => {
             >
               <ul className="flex flex-col z-10  bg-[#0c1607] text-black  fixed top-0 left-0 p-4 transform ">
                 <ul className="py-2 text-white hover:underline">
-                  <Link
-                    className="text-white hover:underline font-bold"
-                    href="/"
-                  >
+                  <Link className="text-white hover:underline" href="/">
                     <li className="py-2 text-white hover:underline ">Domov</li>
                   </Link>
                 </ul>
