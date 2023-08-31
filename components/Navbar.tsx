@@ -208,6 +208,14 @@ const Navbar: FC<NavbarProps> = ({ toggleAuth, session }) => {
               leaveTo="transform -translate-y-full opacity-0"
             >
               <ul className="flex flex-col z-10  bg-[#0c1607] text-black  fixed top-0 left-0 p-4 transform ">
+                <ul className="py-2 text-white hover:underline">
+                  <Link
+                    className="text-white hover:underline font-bold"
+                    href="/"
+                  >
+                    <li className="py-2 text-white hover:underline ">Domov</li>
+                  </Link>
+                </ul>
                 {navLinks.map((link) => (
                   <Link href={link.href} key={link.id}>
                     <li className="py-2 text-white hover:underline">

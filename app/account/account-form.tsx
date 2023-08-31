@@ -229,22 +229,22 @@ export default function AccountForm({ session }: { session: Session | null }) {
       <div className="w-full h-full">
         <Navbar
           toggleAuth={function (): void {
-            throw new Error("Function not implemented.");
+            throw new Error();
           }}
           session={null}
         />
       </div>
       {user && (
-        <div className=" backgroundOverlay2 w-full pt-[6rem] flex flex-row z-4 relative items-center justify-center h-screen font-bold  text-[#315a26d8] gap-4">
+        <div className="text-[12px] md:text-lg backgroundOverlay2 md:flex flex-col w-full pt-[6rem] flex md:flex-row z-4 relative items-center justify-center h-screen font-bold  text-[#315a26d8] gap-4">
           {/* ------------------------------------------------- */}
-          <div className="h-full overflow-y-scroll w-[70%]">
-            <div className="w-full flex items-center justify-center">
-              <div className="flex flex-col mb-4">
+          <div className="h-full overflow-y-scroll w-auto md:w-[50%]">
+            <div className=" md:w-full flex items-center justify-center">
+              <div className="flex w-[300px]  flex-col mb-4">
                 <label className="mb-4 " htmlFor="username">
                   Naslov zavihka: {title}
                 </label>
                 <input
-                  className="p-2 w-[500px]"
+                  className="p-2 w-auto md:w-[500px]"
                   type="text"
                   name="fullName"
                   id="fullName"
@@ -253,9 +253,9 @@ export default function AccountForm({ session }: { session: Session | null }) {
                 />
               </div>
             </div>
-            <div className="justify-center items-center  flex w-full">
+            <div className="justify-center items-center   w-full">
               <div className="">
-                <div className="flex justify-center items-center">
+                <div className=" justify-center items-center">
                   <Avatar
                     uid={user.id}
                     url={avatar}
@@ -268,7 +268,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
               </div>
             </div>
             <div className="w-full items-center flex justify-center ">
-              <div className="flex justify-center flex-col">
+              <div className="w-[300px]  flex justify-center flex-col">
                 <label className="mb-[5px] pb-[10px] " htmlFor="username">
                   {`${location.origin ? location.origin : ""}/${
                     href === null ? "" : href.slice(0, 20)
@@ -276,7 +276,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
                 </label>
 
                 <input
-                  className="p-2 w-[500px]"
+                  className="p-2 w-auto md:w-[500px]"
                   type="text"
                   name="href"
                   id="href"
@@ -293,10 +293,10 @@ export default function AccountForm({ session }: { session: Session | null }) {
               </div>
             </div>
 
-            <div className=" w-[100%] flex justify-center overflow-hidden h-auto">
-              <div className="overflow-y-scroll pt-[4rem] w-[500px]">
+            <div className="w-full  flex  justify-center overflow-hidden h-auto">
+              <div className="w-[300px]  flex justify-center flex-col">
                 <textarea
-                  className=" h-[10rem] w-[500px] p-[2%] overflow-wrap: break-word; word-break: break-all;"
+                  className=" h-[10rem] w-[500px]  p-[2%] overflow-wrap: break-word; word-break: break-all;"
                   onChange={(e) => setText(e.target.value)}
                   value={text === null ? "" : text}
                   maxLength={6000}
@@ -355,8 +355,8 @@ export default function AccountForm({ session }: { session: Session | null }) {
             </div>
           </div>
           {/* ------------------------------------------------- */}
-          <div className="w-auto h-full items-center  border-l  flex flex-col  border-white">
-            <button className="text-white text-sm  w-auto text-justify	">
+          <div className="h-full items-center  border-l p-[10%] md:p-[0] flex flex-col border-none md:border-white">
+            <button className="text-white text-sm  w-full md:w-auto text-justify	">
               {allData?.map((item, index) => (
                 <div
                   className="p-4 hover:underline"

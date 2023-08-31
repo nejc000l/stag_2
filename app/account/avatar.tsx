@@ -82,6 +82,7 @@ export default function Avatar({
       setUploading(false);
     }
   };
+  const isLargeScreen = window.matchMedia("(width: 1024px)").matches;
 
   return (
     <div className="flex flex-col items-center mb-4 ">
@@ -91,7 +92,11 @@ export default function Avatar({
           height={size}
           src={avatarUrl}
           className="avatar image"
-          style={{ height: 500, width: 500 }}
+          style={
+            isLargeScreen
+              ? { height: 500, width: 500 }
+              : { height: 300, width: 300 }
+          }
         />
       ) : (
         <div
